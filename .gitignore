@@ -1,0 +1,24 @@
+# CMake Files
+
+CMakeFiles
+CMakeCache.txt
+Makefile
+
+# CMake Headers
+
+cmake.h
+gitversion.h
+
+# CMake Packaging
+
+install_manifest.txt
+cmake_install.cmake
+CPackConfig.cmake
+CPackSourceConfig.cmake
+_CPack_Packages/
+
+# General
+
+*.log
+*.exe
+atrinik
