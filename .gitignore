@@ -18,7 +18,18 @@ _CPack_Packages/
 
 # General
 
+*.o
+*.a
+*.so
+*.db
 *.log
 *.exe
-build.user
+*.dll
+*.pyc
+__pycache__
+
+# Client
+
 atrinik
+config-custom.cfg
+build.user
