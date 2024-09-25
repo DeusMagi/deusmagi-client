@@ -8,6 +8,7 @@ Makefile
 
 cmake.h
 gitversion.h
+version.h
 
 # CMake Packaging
 
