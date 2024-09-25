@@ -1,0 +1,3 @@
+[submodule "common/toolkit"]
+	path = common/toolkit
+	url = https://github.com/DeusMagi/deusmagi-toolkit
