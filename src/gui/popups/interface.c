@@ -344,10 +344,10 @@ static int popup_event_func(popup_struct *popup, SDL_Event *event)
                 char c;
                 size_t i, len, links_len;
 
-                if (event->key.keysym.sym >= SDLK_KP0 && event->key.keysym.sym <= SDLK_KP9) {
-                    c = '0' + event->key.keysym.sym - SDLK_KP0;
+                if (event->key.keysym.sym >= SDLK_KP_0 && event->key.keysym.sym <= SDLK_KP_9) {
+                    c = '0' + event->key.keysym.sym - SDLK_KP_0;
                 } else {
-                    c = event->key.keysym.unicode & 0xff;
+                    c = 0xff;
                 }
 
                 len = strlen(character_shortcuts);
@@ -368,11 +368,11 @@ static int popup_event_func(popup_struct *popup, SDL_Event *event)
             button_hello_event();
             return 1;
         }
-    } else if (event->type == SDL_MOUSEBUTTONDOWN && event->motion.x >= popup->x && event->motion.x < popup->x + popup->surface->w && event->motion.y >= popup->y && event->motion.y < popup->y + popup->surface->h) {
-        if (event->button.button == SDL_BUTTON_WHEELDOWN) {
+    } else if (event->type == SDL_MOUSEWHEEL && event->motion.x >= popup->x && event->motion.x < popup->x + popup->surface->w && event->motion.y >= popup->y && event->motion.y < popup->y + popup->surface->h) {
+        if (event->wheel.y < 0) {
             scrollbar_scroll_adjust(&interface_data->scrollbar, 1);
             return 1;
-        } else if (event->button.button == SDL_BUTTON_WHEELUP) {
+        } else if (event->wheel.y > 0) {
             scrollbar_scroll_adjust(&interface_data->scrollbar, -1);
             return 1;
         }

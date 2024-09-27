@@ -76,7 +76,7 @@ region_map_t *region_map_clone(region_map_t *region_map)
 
     clone = ecalloc(1, sizeof(*clone));
     clone->zoom = 100;
-    clone->surface = SDL_DisplayFormat(region_map->surface);
+    clone->surface = SDL_ConvertSurface(region_map->surface, region_map->surface->format, 0);
     clone->def = region_map->def;
     clone->def->refcount++;
     clone->fow = region_map->fow;
@@ -236,7 +236,7 @@ bool region_map_ready(region_map_t *region_map)
     }
 
     img = IMG_Load_RW(SDL_RWFromMem(body_png, body_png_size), 1);
-    region_map->surface = SDL_DisplayFormat(img);
+    region_map->surface = SDL_ConvertSurface(img, img->format, 0);
     SDL_FreeSurface(img);
 
     region_map_pan(region_map);
@@ -385,7 +385,7 @@ void region_map_resize(region_map_t *region_map, int adjust)
                 region_map->zoom / 100.0, region_map->zoom / 100.0, 0);
         region_map->fow_zoomed = zoomSurface(region_map->fow->surface,
                 region_map->zoom / 100.0, region_map->zoom / 100.0, 0);
-        SDL_SetColorKey(region_map->fow_zoomed, SDL_SRCCOLORKEY,
+        SDL_SetColorKey(region_map->fow_zoomed, SDL_TRUE,
                 SDL_MapRGB(region_map->fow_zoomed->format, 255, 255, 255));
     }
 
@@ -886,7 +886,7 @@ void region_map_fow_update(region_map_t *region_map)
     }
 
     if (region_map->fow->surface == NULL) {
-        region_map->fow->surface = SDL_CreateRGBSurface(get_video_flags(),
+        region_map->fow->surface = SDL_CreateRGBSurface(0,
                 region_map->surface->w, region_map->surface->h, video_get_bpp(),
                 0, 0, 0, 0);
     }
@@ -924,8 +924,8 @@ void region_map_fow_update(region_map_t *region_map)
 
     region_map_fow_update_regions(region_map, &color);
 
-    SDL_SetColorKey(region_map->fow->surface, SDL_SRCCOLORKEY, color);
-    surface = SDL_DisplayFormat(region_map->fow->surface);
+    SDL_SetColorKey(region_map->fow->surface, SDL_TRUE, color);
+    surface = SDL_ConvertSurface(region_map->fow->surface, region_map->fow->surface->format, 0);
     SDL_FreeSurface(region_map->fow->surface);
     region_map->fow->surface = surface;
 }

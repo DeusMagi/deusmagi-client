@@ -2255,7 +2255,7 @@ static void widget_draw(widgetdata *widget)
             map_redraw_flag = 1;
         }
 
-        widget->surface = SDL_CreateRGBSurface(get_video_flags(),
+        widget->surface = SDL_CreateRGBSurface(0,
                                                widget->w,
                                                widget->h,
                                                video_get_bpp(),

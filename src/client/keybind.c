@@ -185,7 +185,7 @@ void keybind_deinit(void)
 }
 
 /**
- * Adjust SDLMod state value. This is done because the state may have
+ * Adjust SDL_Keymod state value. This is done because the state may have
  * other flags we do not care about, and we do not want to save those
  * to file. It also simplifies keyboard modifier state checks.
  * @param mod
@@ -193,11 +193,11 @@ void keybind_deinit(void)
  * @return
  * Adjusted state.
  */
-static SDLMod keybind_adjust_kmod(SDLMod mod)
+static SDL_Keymod keybind_adjust_kmod(SDL_Keymod mod)
 {
     /* We only care about left/right shift, ctrl, alt, and super
      * modifiers, so remove any others. */
-    mod &= KMOD_SHIFT | KMOD_CTRL | KMOD_ALT | KMOD_META;
+    mod &= KMOD_SHIFT | KMOD_CTRL | KMOD_ALT | KMOD_GUI;
 
     /* The following code deals with making sure that if the modifier
      * contains only for example left shift modifier, right shift is also
@@ -215,8 +215,8 @@ static SDLMod keybind_adjust_kmod(SDLMod mod)
         mod |= KMOD_ALT;
     }
 
-    if (mod & KMOD_META) {
-        mod |= KMOD_META;
+    if (mod & KMOD_GUI) {
+        mod |= KMOD_GUI;
     }
 
     return mod;
@@ -234,7 +234,7 @@ static SDLMod keybind_adjust_kmod(SDLMod mod)
  * @return
  * The added keybinding.
  */
-keybind_struct *keybind_add(SDLKey key, SDLMod mod, const char *command)
+keybind_struct *keybind_add(SDL_Keycode key, SDL_Keymod mod, const char *command)
 {
     keybind_struct *keybind;
 
@@ -263,7 +263,7 @@ keybind_struct *keybind_add(SDLKey key, SDLMod mod, const char *command)
  * @param command
  * Command to change.
  */
-void keybind_edit(size_t i, SDLKey key, SDLMod mod, const char *command)
+void keybind_edit(size_t i, SDL_Keycode key, SDL_Keymod mod, const char *command)
 {
     /* Sanity check. */
     if (i >= keybindings_num) {
@@ -333,7 +333,7 @@ void keybind_repeat_toggle(size_t i)
  * @return
  * 'buf'.
  */
-char *keybind_get_key_shortcut(SDLKey key, SDLMod mod, char *buf, size_t len)
+char *keybind_get_key_shortcut(SDL_Keycode key, SDL_Keymod mod, char *buf, size_t len)
 {
     buf[0] = '\0';
 
@@ -350,7 +350,7 @@ char *keybind_get_key_shortcut(SDLKey key, SDLMod mod, char *buf, size_t len)
         strncat(buf, "alt + ", len - strlen(buf) - 1);
     }
 
-    if (mod & KMOD_META) {
+    if (mod & KMOD_GUI) {
         strncat(buf, "super + ", len - strlen(buf) - 1);
     }
 
@@ -464,7 +464,7 @@ int keybind_process_event(SDL_KeyboardEvent *event)
  * @param type
  * Either SDL_KEYDOWN or SDL_KEYUP.
  */
-void keybind_process(keybind_struct *keybind, uint8_t type)
+void keybind_process(keybind_struct *keybind, SDL_EventType type)
 {
     char command[MAX_BUF], *cp;
 

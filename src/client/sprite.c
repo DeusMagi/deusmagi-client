@@ -61,7 +61,7 @@ static sprite_cache_t *sprites_cache = NULL;
 void
 sprite_init_system (void)
 {
-    FormatHolder = SDL_CreateRGBSurface(SDL_SRCALPHA,
+    FormatHolder = SDL_CreateRGBSurface(0,
                                         1,
                                         1,
                                         32,
@@ -69,7 +69,7 @@ sprite_init_system (void)
                                         0x00FF0000,
                                         0x0000FF00,
                                         0x000000FF);
-    SDL_SetAlpha(FormatHolder, SDL_SRCALPHA, 255);
+    SDL_SetSurfaceAlphaMod(FormatHolder, 255);
 }
 
 /**
@@ -124,11 +124,11 @@ sprite_tryload_file (char *fname, uint32_t flag, SDL_RWops *rwop)
         return NULL;
     }
 
-    uint32_t ckflags = SDL_SRCCOLORKEY | SDL_ANYFORMAT | SDL_RLEACCEL;
+    uint32_t ckflags = SDL_TRUE | SDL_RLEACCEL;
     uint32_t ckey = 0;
 
     if (bitmap->format->palette) {
-        ckey = bitmap->format->colorkey;
+        SDL_GetColorKey(bitmap, ckey);
         SDL_SetColorKey(bitmap, ckflags, ckey);
     } else if (flag & SURFACE_FLAG_COLKEY_16M) {
         /* Force a true color png to colorkey. Default ckey is black (0). */
@@ -144,10 +144,10 @@ sprite_tryload_file (char *fname, uint32_t flag, SDL_RWops *rwop)
     sprite->bitmap = bitmap;
 
     if (flag & SURFACE_FLAG_DISPLAYFORMATALPHA) {
-        sprite->bitmap = SDL_DisplayFormatAlpha(bitmap);
+        sprite->bitmap = SDL_ConvertSurfaceFormat(bitmap, SDL_PIXELFORMAT_RGBA8888, 0);
         SDL_FreeSurface(bitmap);
     } else if (flag & SURFACE_FLAG_DISPLAYFORMAT) {
-        sprite->bitmap = SDL_DisplayFormat(bitmap);
+        sprite->bitmap = SDL_ConvertSurface(bitmap, bitmap->format, 0);
         SDL_FreeSurface(bitmap);
     }
 
@@ -328,7 +328,7 @@ sprite_effect_red (SDL_Surface *surface)
         }
     }
 
-    SDL_Surface *ret = SDL_DisplayFormatAlpha(tmp);
+    SDL_Surface *ret = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA8888, 0);
     SDL_FreeSurface(tmp);
     return ret;
 }
@@ -362,7 +362,7 @@ sprite_effect_gray (SDL_Surface *surface)
         }
     }
 
-    SDL_Surface *ret = SDL_DisplayFormatAlpha(tmp);
+    SDL_Surface *ret = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA8888, 0);
     SDL_FreeSurface(tmp);
     return ret;
 }
@@ -398,7 +398,7 @@ sprite_effect_fow (SDL_Surface *surface)
         }
     }
 
-    SDL_Surface *ret = SDL_DisplayFormatAlpha(tmp);
+    SDL_Surface *ret = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA8888, 0);
     SDL_FreeSurface(tmp);
     return ret;
 }
@@ -423,7 +423,7 @@ sprite_effect_glow (SDL_Surface     *surface,
                     double           speed,
                     double           state)
 {
-    SDL_Surface *tmp = SDL_CreateRGBSurface(surface->flags,
+    SDL_Surface *tmp = SDL_CreateRGBSurface(0,
                                             surface->w + SPRITE_GLOW_SIZE * 2,
                                             surface->h + SPRITE_GLOW_SIZE * 2,
                                             surface->format->BitsPerPixel,
@@ -448,7 +448,11 @@ sprite_effect_glow (SDL_Surface     *surface,
     for (int x = 0; x < surface->w; x++) {
         for (int y = 0; y < surface->h; y++) {
             Uint32 pixel = getpixel(surface, x, y);
-            if (pixel == surface->format->colorkey) {
+            uint32_t ckey = 0;
+            
+            SDL_GetColorKey(surface, ckey);
+            
+            if (pixel == ckey) {
                 /* Transparent pixel. */
                 continue;
             }
@@ -584,7 +588,7 @@ sprite_effect_glow (SDL_Surface     *surface,
 
     efree(grid);
 
-    SDL_Surface *ret = SDL_DisplayFormatAlpha(tmp);
+    SDL_Surface *ret = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA8888, 0);
     SDL_FreeSurface(tmp);
     return ret;
 
@@ -628,7 +632,7 @@ do {                            \
     }
 
     if (BIT_QUERY(effects->flags, SPRITE_FLAG_DARK)) {
-        surface = SDL_DisplayFormatAlpha(surface);
+        surface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA8888, 0);
         if (surface == NULL) {
             goto done;
         }
@@ -727,7 +731,7 @@ do {                            \
 
     /* Alpha transparency. */
     if (effects->alpha != 0) {
-        surface = SDL_DisplayFormatAlpha(surface);
+        surface = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_RGBA8888, 0);
         if (surface == NULL) {
             goto done;
         }
@@ -1478,7 +1482,7 @@ surface_set_alpha (SDL_Surface *surface, uint8_t alpha)
     SDL_PixelFormat *fmt = surface->format;
 
     if (fmt->Amask == 0) {
-        SDL_SetAlpha(surface, SDL_SRCALPHA, alpha);
+        SDL_SetSurfaceAlphaMod(surface, alpha);
     } else {
         Uint8 bpp = fmt->BytesPerPixel;
         double scale = alpha / 255.0f;

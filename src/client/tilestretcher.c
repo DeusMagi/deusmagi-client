@@ -230,7 +230,7 @@ int add_color_to_surface(SDL_Surface *dest, Uint8 red, Uint8 green, Uint8 blue)
     colors[ncol].b = blue;
     ncol++;
 
-    SDL_SetColors(dest, colors, 0, ncol);
+    SDL_SetPaletteColors(dest->format->palette, colors, 0, ncol);
     dest->format->palette->ncolors = ncol;
 
     return 0;
@@ -263,8 +263,11 @@ void copy_pixel_to_pixel(SDL_Surface *src, SDL_Surface *dest, int x, int y,
 
     Uint32 color = getpixel(src, x, y);
 
+    uint32_t ckey = 0;
+    SDL_GetColorKey(src, ckey);
+
     /* No need to copy transparent pixels */
-    if (src->format->BitsPerPixel == 8 && (color == src->format->colorkey)) {
+    if (src->format->BitsPerPixel == 8 && (color == ckey)) {
         return;
     }
 
@@ -285,8 +288,11 @@ void copy_pixel_to_pixel(SDL_Surface *src, SDL_Surface *dest, int x, int y,
     blue = MIN(255, n);
 
     color = SDL_MapRGBA(dest->format, red, green, blue, alpha);
-
-    if (color == dest->format->colorkey) {
+    ckey = 0;
+    
+    SDL_GetColorKey(dest, ckey);
+    
+    if (color == ckey) {
         blue += 256 >> (8 - dest->format->Bloss);
         color = SDL_MapRGBA(dest->format, red, green, blue, alpha);
     }
@@ -408,11 +414,11 @@ SDL_Surface *tile_stretch(SDL_Surface *src, int n, int e, int s, int w)
     /* Initialization and housekeeping */
     SDL_LockSurface(src);
 
-    SDL_Surface *tmp = SDL_CreateRGBSurface(src->flags, src->w, src->h + n,
+    SDL_Surface *tmp = SDL_CreateRGBSurface(0, src->w, src->h + n,
             src->format->BitsPerPixel, src->format->Rmask,
             src->format->Gmask, src->format->Bmask, src->format->Amask);
 
-    SDL_Surface *destination = SDL_DisplayFormatAlpha(tmp);
+    SDL_Surface *destination = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA8888, 0);
     SDL_FreeSurface(tmp);
     SDL_LockSurface(destination);
 
@@ -430,7 +436,7 @@ SDL_Surface *tile_stretch(SDL_Surface *src, int n, int e, int s, int w)
     SDL_FillRect( destination, NULL, color);
 
     if (src->format->BitsPerPixel == 8) {
-        SDL_SetColorKey(destination, SDL_SRCCOLORKEY, color);
+        SDL_SetColorKey(destination, SDL_TRUE, color);
     }
 
     /* If the target is the same size we don't want copy_vertical_line()

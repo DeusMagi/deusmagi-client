@@ -704,7 +704,7 @@ int list_handle_mouse(list_struct *list, SDL_Event *event)
         return 0;
     }
 
-    if (event->type != SDL_MOUSEBUTTONDOWN && event->type != SDL_MOUSEBUTTONUP && event->type != SDL_MOUSEMOTION) {
+    if (event->type != SDL_MOUSEBUTTONDOWN && event->type != SDL_MOUSEBUTTONUP && event->type != SDL_MOUSEMOTION && event->type != SDL_MOUSEWHEEL) {
         return 0;
     }
 
@@ -764,8 +764,8 @@ int list_handle_mouse(list_struct *list, SDL_Event *event)
     }
 
     /* Handle mouse wheel for scrolling. */
-    if (event->type == SDL_MOUSEBUTTONDOWN && (event->button.button == SDL_BUTTON_WHEELUP || event->button.button == SDL_BUTTON_WHEELDOWN)) {
-        list_scroll(list, event->button.button == SDL_BUTTON_WHEELUP, 1);
+    if (event->type == SDL_MOUSEWHEEL && (event->wheel.y > 0 || event->wheel.y < 0)) {
+        list_scroll(list, event->wheel.y > 0, 1);
         return 1;
     }
 

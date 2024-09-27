@@ -113,7 +113,7 @@ static void widget_draw(widgetdata *widget)
             SDL_FreeSurface(widget->surface);
         }
 
-        widget->surface = SDL_CreateRGBSurface(get_video_flags(), widget->w,
+        widget->surface = SDL_CreateRGBSurface(0, widget->w,
                 widget->h, video_get_bpp(), 0, 0, 0, 0);
         minimap_redraw_flag = 1;
 
@@ -203,7 +203,7 @@ static void widget_draw(widgetdata *widget)
             SDL_Rect zoomedbox;
 
             if (minimap->surface == NULL) {
-                minimap->surface = SDL_CreateRGBSurface(get_video_flags(),
+                minimap->surface = SDL_CreateRGBSurface(0,
                         850 * (MAP_FOW_SIZE / 2), 600 * (MAP_FOW_SIZE / 2),
                         video_get_bpp(), 0, 0, 0, 0);
             }
@@ -233,7 +233,7 @@ static void widget_draw(widgetdata *widget)
                     widget->surface, NULL);
         }
 
-        SDL_SetColorKey(widget->surface, SDL_SRCCOLORKEY,
+        SDL_SetColorKey(widget->surface, SDL_TRUE,
                 getpixel(widget->surface, 0, 0));
     }
 
@@ -245,15 +245,15 @@ static void widget_draw(widgetdata *widget)
 /** @copydoc widgetdata::event_func */
 static int widget_event(widgetdata *widget, SDL_Event *event)
 {
-    if (event->type == SDL_MOUSEBUTTONDOWN) {
-        if (event->button.button == SDL_BUTTON_WHEELUP) {
+    if (event->type == SDL_MOUSEWHEEL) {
+        if (event->wheel.y > 0) {
             /* Zoom in. */
             if (MapData.region_map->zoom < 100) {
                 MapData.region_map->zoom += 5;
                 minimap_redraw_flag = 1;
                 return 1;
             }
-        } else if (event->button.button == SDL_BUTTON_WHEELDOWN) {
+        } else if (event->wheel.y < 0) {
             /* Zoom out. */
             if (MapData.region_map->zoom > 10) {
                 MapData.region_map->zoom -= 5;

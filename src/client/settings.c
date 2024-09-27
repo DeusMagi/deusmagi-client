@@ -487,9 +487,10 @@ static void setting_apply_runtime(int cat, int setting)
             /* Resolution change. */
         case OPT_RESOLUTION:
         {
-            int w, h;
+            int w, h, wWin, hWin;
+            SDL_GetWindowSize(ScreenWindow, &wWin, &hWin);
 
-            if (sscanf(SETTING_SELECT(setting_categories[cat]->settings[setting])->options[setting_get_int(cat, setting)], "%dx%d", &w, &h) == 2 && (ScreenSurface->w != w || ScreenSurface->h != h)) {
+            if (sscanf(SETTING_SELECT(setting_categories[cat]->settings[setting])->options[setting_get_int(cat, setting)], "%dx%d", &w, &h) == 2 && (wWin != w || hWin != h)) {
                 resize_window(w, h);
                 video_set_size();
             }
@@ -500,8 +501,8 @@ static void setting_apply_runtime(int cat, int setting)
             /* Fullscreen change. */
         case OPT_FULLSCREEN:
 
-            if ((setting_get_int(cat, setting) && !(ScreenSurface->flags & SDL_FULLSCREEN)) || (!setting_get_int(cat, setting) && ScreenSurface->flags & SDL_FULLSCREEN)) {
-                video_fullscreen_toggle(&ScreenSurface, NULL);
+            if ((setting_get_int(cat, setting) && !(SDL_GetWindowFlags(ScreenWindow) & SDL_WINDOW_FULLSCREEN_DESKTOP)) || (!setting_get_int(cat, setting) && SDL_GetWindowFlags(ScreenWindow) & SDL_WINDOW_FULLSCREEN_DESKTOP)) {
+                SDL_SetWindowFullscreen(ScreenWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
             }
 
             break;

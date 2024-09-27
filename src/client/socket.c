@@ -362,14 +362,14 @@ void socket_thread_start(void)
 
     abort_thread = 0;
 
-    input_thread = SDL_CreateThread(reader_thread_loop, NULL);
+    input_thread = SDL_CreateThread(reader_thread_loop, "reader_thread_loop", NULL);
 
     if (input_thread == NULL) {
         LOG(ERROR, "Unable to start socket thread: %s", SDL_GetError());
         exit(1);
     }
 
-    output_thread = SDL_CreateThread(writer_thread_loop, NULL);
+    output_thread = SDL_CreateThread(writer_thread_loop, "writer_thread_loop", NULL);
 
     if (output_thread == NULL) {
         LOG(ERROR, "Unable to start socket thread: %s", SDL_GetError());

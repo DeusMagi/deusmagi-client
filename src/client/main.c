@@ -44,7 +44,10 @@
 #include <cmake.h>
 
 /** The main screen surface. */
+SDL_Window *ScreenWindow;
+SDL_Renderer *ScreenRenderer;
 SDL_Surface *ScreenSurface;
+SDL_Texture *ScreenTexture;
 /** Server's attributes */
 struct sockaddr_in insock;
 /** Client socket. */
@@ -399,23 +402,6 @@ static void play_action_sounds(void)
 }
 
 /**
- * List video modes available.
- */
-void list_vid_modes(void)
-{
-    SDL_Rect **modes;
-
-    /* Get available fullscreen/hardware modes */
-    modes = SDL_ListModes(NULL, SDL_HWACCEL);
-
-    /* Check if there are any modes available */
-    if (modes == (SDL_Rect **) 0) {
-        LOG(ERROR, "No video modes available!");
-        exit(1);
-    }
-}
-
-/**
  * Hook for detecting background music changes.
  */
 static void sound_background_hook(void)
@@ -699,7 +685,6 @@ int main(int argc, char *argv[])
     video_init();
     system_start();
     sprite_init_system();
-    SDL_EnableUNICODE(1);
     text_init();
     texture_init();
     sound_init();
@@ -784,7 +769,7 @@ int main(int argc, char *argv[])
                 LOG(ERROR, "Error connecting: cpl.state: %d SocketError: %s "
                         "(%d)", cpl.state, strerror(s_errno), s_errno);
             }
-        } else if (SDL_GetAppState() & SDL_APPACTIVE) {
+        } else if (SDL_GetWindowFlags(ScreenWindow) & (SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_INPUT_FOCUS)) {
             if (LastTick - anim_tick > 125) {
                 anim_tick = LastTick;
                 animate_objects();
@@ -796,7 +781,7 @@ int main(int argc, char *argv[])
 
         update = 0;
 
-        if (!(SDL_GetAppState() & SDL_APPACTIVE)) {
+        if (!(SDL_GetWindowFlags(ScreenWindow) & (SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_INPUT_FOCUS))) {
         } else if (cpl.state == ST_PLAY) {
             static int old_cursor_x = -1, old_cursor_y = -1;
 
@@ -822,7 +807,7 @@ int main(int argc, char *argv[])
         }
 
         if (update) {
-            SDL_FillRect(ScreenSurface, NULL, 0);
+            SDL_SetRenderDrawColor(ScreenRenderer, 0, 0, 0, 255);
         }
 
         if (cpl.state <= ST_WAITFORPLAY) {
@@ -845,7 +830,7 @@ int main(int argc, char *argv[])
 
         if (!setting_get_int(OPT_CAT_CLIENT, OPT_SYSTEM_CURSOR) &&
             cursor_x != -1 && cursor_y != -1 &&
-            SDL_GetAppState() & SDL_APPMOUSEFOCUS) {
+            SDL_GetWindowFlags(ScreenWindow) & SDL_WINDOW_MOUSE_FOCUS) {
             surface_show(ScreenSurface,
                          cursor_x - texture_surface(cursor_texture)->w / 2,
                          cursor_y - texture_surface(cursor_texture)->h / 2,
@@ -858,12 +843,15 @@ int main(int argc, char *argv[])
         sprite_cache_gc();
 
         if (update) {
-            SDL_Flip(ScreenSurface);
+            SDL_UpdateTexture(ScreenTexture, NULL, ScreenSurface->pixels, ScreenSurface->pitch);
+            SDL_RenderClear(ScreenRenderer);
+            SDL_RenderCopy(ScreenRenderer, ScreenTexture, NULL, NULL);
+            SDL_RenderPresent(ScreenRenderer);
         }
 
         LastTick = SDL_GetTicks();
 
-        if (SDL_GetAppState() & SDL_APPACTIVE) {
+        if (SDL_GetWindowFlags(ScreenWindow) & (SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_INPUT_FOCUS)) {
             frames++;
 
             if (LastTick - last_frame_ticks >= 1000) {
@@ -881,7 +869,7 @@ int main(int argc, char *argv[])
                 if (elapsed_time < 1000 / fps_limit) {
                     SDL_Delay(MAX(1, 1000 / fps_limit - elapsed_time));
 
-                    if (!(SDL_GetAppState() & SDL_APPACTIVE) && SDL_GetTicks() - frame_start_time < 1000) {
+                    if (!(SDL_GetWindowFlags(ScreenWindow) & (SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_INPUT_FOCUS)) && SDL_GetTicks() - frame_start_time < 1000) {
                         SDL_PumpEvents();
                         continue;
                     }

@@ -99,20 +99,22 @@ if (MINGW)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
 endif ()
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+
 # SDL is required to run the client.
-find_package(SDL REQUIRED)
-include_directories(${SDL_INCLUDE_DIR})
+find_package(SDL2 REQUIRED)
+include_directories(${SDL2_INCLUDE_DIR})
 set(HAVE_SDL true)
 
 # SDL_image is also required, otherwise no bitmaps or map images could be
 # displayed.
-find_package(SDL_image REQUIRED)
-include_directories(${SDLIMAGE_INCLUDE_DIR})
+find_package(SDL2_image REQUIRED)
+include_directories(${SDL2_IMAGE_INCLUDE_DIR})
 set(HAVE_SDL_IMAGE true)
 
 # SDL_ttf is used for all text drawing, so it's required.
-find_package(SDL_ttf REQUIRED)
-include_directories(${SDLTTF_INCLUDE_DIR})
+find_package(SDL2_ttf REQUIRED)
+include_directories(${SDL2_TTF_INCLUDE_DIR})
 set(HAVE_SDL_TTF true)
 
 # LibXML2 is required.
@@ -120,13 +122,13 @@ find_package(LibXml2 REQUIRED)
 include_directories(${LIBXML2_INCLUDE_DIR})
 
 # SDL_mixer is optional, as sound is not a must-have.
-find_package(SDL_mixer)
+find_package(SDL2_mixer)
 
-if (SDLMIXER_FOUND)
-    include_directories(${SDLMIXER_INCLUDE_DIR})
+if (SDL2_MIXER_FOUND)
+    include_directories(${SDL2_MIXER_INCLUDE_DIR})
     set(HAVE_SDL_MIXER true)
 else ()
-    message(STATUS "Warning: SDL_mixer not found - sound support will be disabled")
+    message(STATUS "Warning: SDL2_mixer not found - sound support will be disabled")
 endif ()
 
 # Add sources.
@@ -149,14 +151,14 @@ target_link_libraries(${EXECUTABLE} atrinik-toolkit)
 target_link_libraries(${EXECUTABLE} -Xlinker --allow-multiple-definition)
 
 # Link all the available libraries.
-target_link_libraries(${EXECUTABLE} ${SDL_LIBRARY})
-target_link_libraries(${EXECUTABLE} ${SDLIMAGE_LIBRARY})
-target_link_libraries(${EXECUTABLE} ${SDLTTF_LIBRARY})
+target_link_libraries(${EXECUTABLE} ${SDL2_LIBRARIES})
+target_link_libraries(${EXECUTABLE} ${SDL2_IMAGE_LIBRARY})
+target_link_libraries(${EXECUTABLE} ${SDL2_TTF_LIBRARY})
 target_link_libraries(${EXECUTABLE} ${LIBXML2_LIBRARIES})
 
 # Link SDL_mixer if available.
 if (HAVE_SDL_MIXER)
-    target_link_libraries(${EXECUTABLE} ${SDLMIXER_LIBRARY})
+    target_link_libraries(${EXECUTABLE} ${SDL2_MIXER_LIBRARY})
 endif ()
 
 # Get all the include directories used to compile the client.
@@ -221,7 +223,7 @@ if (MINGW)
 endif ()
 
 set(CPACK_DEBIAN_PACKAGE_NAME "atrinik")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.5), libgcc1 (>= 1:4.1), libsdl-image1.2 (>= 1.2.5), libsdl1.2debian (>= 1.2.10-1), libcurl3 (>= 7.16), libsdl-mixer1.2 (>= 1), libsdl-ttf2.0-0 (>= 1), timidity (>= 1), zlib1g (>= 1), libx11-6, libxmu6")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.5), libgcc1 (>= 1:4.1), libsdl2-image (>= 2), libsdl2debian (>= 2), libcurl3 (>= 7.16), libsdl2-mixer (>= 2), libsdl2-ttf (>= 2), timidity (>= 1), zlib1g (>= 1), libx11-6, libxmu6")
 set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Fantasy multiplayer online role-playing game with 2.5D graphics\n .\n Homepage: http://www.atrinik.org/")
 set(CPACK_DEBIAN_PACKAGE_SECTION "games")
 

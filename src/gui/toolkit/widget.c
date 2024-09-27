@@ -1495,7 +1495,7 @@ int widget_event_start_move(widgetdata *widget)
     if (!widget_mouse_over(widget, x, y)) {
         x = widget_x(widget) + widget_w(widget) / 2;
         y = widget_y(widget) + widget_h(widget) / 2;
-        SDL_WarpMouse(x, y);
+        SDL_WarpMouseInWindow(ScreenWindow, x, y);
     }
 
     /* we know this widget owns the mouse.. */

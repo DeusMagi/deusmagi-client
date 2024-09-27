@@ -41,10 +41,10 @@ typedef struct keybind_struct {
     char *command;
 
     /** Key bound. */
-    SDLKey key;
+    SDL_Keycode key;
 
     /** Ctrl/shift/etc modifiers. */
-    SDLMod mod;
+    SDL_Keymod mod;
 
     /** Whether to trigger repeat. */
     uint8_t repeat;
@@ -55,6 +55,6 @@ typedef struct keybind_struct {
 /** Ticks that must pass before the key begins repeating. */
 #define KEY_REPEAT_TIME_INIT (175)
 /** Check whether the specified key is a modifier key. */
-#define KEY_IS_MODIFIER(_key) ((_key) >= SDLK_NUMLOCK && (_key) <= SDLK_COMPOSE)
+#define KEY_IS_MODIFIER(_key) ((_key) >= SDLK_NUMLOCKCLEAR)
 
 #endif

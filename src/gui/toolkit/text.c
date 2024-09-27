@@ -1311,6 +1311,7 @@ int text_show_character(font_struct **font, font_struct *orig_font, SDL_Surface 
                         SDL_Rect icon_box, icon_dst;
                         double zoom_factor;
                         double zoom_x, zoom_y;
+                        uint32_t ckey = 0;
 
                         if (icon_sprite) {
                             border_up = icon_sprite->border_up;
@@ -1318,7 +1319,9 @@ int text_show_character(font_struct **font, font_struct *orig_font, SDL_Surface 
                             border_left = icon_sprite->border_left;
                             border_right = icon_sprite->border_right;
                         } else {
-                            surface_borders_get(icon_surface, &border_up, &border_down, &border_left, &border_right, icon_surface->format->colorkey);
+                            SDL_GetColorKey(icon_surface, ckey);
+                            
+                            surface_borders_get(icon_surface, &border_up, &border_down, &border_left, &border_right, ckey);
                         }
 
                         icon_w = icon_orig_w = icon_surface->w - border_left - border_right;
@@ -1788,11 +1791,11 @@ int text_show_character(font_struct **font, font_struct *orig_font, SDL_Surface 
                 SDL_Surface *new_ttf_surface;
 
                 /* Remove black border. */
-                SDL_SetColorKey(ttf_surface, SDL_SRCCOLORKEY | SDL_ANYFORMAT, 0);
+                SDL_SetColorKey(ttf_surface, SDL_TRUE, 0);
                 /* Set the opacity. */
-                SDL_SetAlpha(ttf_surface, SDL_SRCALPHA | SDL_RLEACCEL, info->used_alpha);
+                SDL_SetSurfaceAlphaMod(ttf_surface, info->used_alpha);
                 /* Create new surface to blit. */
-                new_ttf_surface = SDL_DisplayFormatAlpha(ttf_surface);
+                new_ttf_surface = SDL_ConvertSurfaceFormat(ttf_surface, SDL_PIXELFORMAT_RGBA8888, 0);
                 /* Free the old one. */
                 SDL_FreeSurface(ttf_surface);
                 ttf_surface = new_ttf_surface;
@@ -2013,7 +2016,7 @@ void text_show(SDL_Surface *surface, font_struct *font, const char *text, int x,
 
     /* Align to the center. */
     if (box && flags & (TEXT_ALIGN_CENTER | TEXT_VALIGN_CENTER)) {
-        uint16_t w, h;
+        int w, h;
 
         text_get_width_height(font, text, flags & ~(TEXT_ALIGN_CENTER | TEXT_VALIGN_CENTER), box, flags & TEXT_ALIGN_CENTER ? &w : NULL, flags & TEXT_VALIGN_CENTER ? &h : NULL);
 
@@ -2407,7 +2410,7 @@ int text_get_height(font_struct *font, const char *text, uint64_t flags)
  * @param[out] w Will contain the calculated width.
  * @param[out] h Will contain the calculated height.
  */
-void text_get_width_height(font_struct *font, const char *text, uint64_t flags, SDL_Rect *box, uint16_t *w, uint16_t *h)
+void text_get_width_height(font_struct *font, const char *text, uint64_t flags, SDL_Rect *box, int *w, int *h)
 {
     SDL_Rect box2;
 

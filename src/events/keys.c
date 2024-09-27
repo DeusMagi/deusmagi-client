@@ -29,7 +29,7 @@
 
 #include <global.h>
 
-key_struct keys[SDLK_LAST];
+key_struct keys[SDL_NUM_SCANCODES];
 
 /**
  * Initialize keys.

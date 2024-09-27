@@ -755,7 +755,7 @@ SDL_Surface *effect_sprite_overlay(SDL_Surface *surface)
         }
     }
 
-    SDL_Surface *ret = SDL_DisplayFormatAlpha(tmp);
+    SDL_Surface *ret = SDL_ConvertSurfaceFormat(tmp, SDL_PIXELFORMAT_RGBA8888, 0);
     SDL_FreeSurface(tmp);
     return ret;
 }

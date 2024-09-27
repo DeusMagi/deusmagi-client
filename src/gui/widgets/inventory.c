@@ -513,11 +513,11 @@ static int widget_event(widgetdata *widget, SDL_Event *event)
         return 1;
     }
 
-    if (event->type == SDL_MOUSEBUTTONDOWN) {
-        if (event->button.button == SDL_BUTTON_WHEELUP) {
+    if (event->type == SDL_MOUSEWHEEL) {
+        if (event->wheel.y > 0) {
             widget_inventory_handle_arrow_key(widget, SDLK_UP);
             return 1;
-        } else if (event->button.button == SDL_BUTTON_WHEELDOWN) {
+        } else if (event->wheel.y < 0) {
             widget_inventory_handle_arrow_key(widget, SDLK_DOWN);
             return 1;
         }
@@ -792,7 +792,7 @@ object *widget_inventory_get_selected(widgetdata *widget)
  * @param key
  * The key.
  */
-void widget_inventory_handle_arrow_key(widgetdata *widget, SDLKey key)
+void widget_inventory_handle_arrow_key(widgetdata *widget, SDL_Keycode key)
 {
     inventory_struct *inventory = INVENTORY(widget);
 

@@ -319,20 +319,22 @@ static int popup_event_func(popup_struct *popup, SDL_Event *event)
         return 1;
     }
 
-    if (event->type == SDL_MOUSEBUTTONDOWN) {
-        if (event->button.button == SDL_BUTTON_WHEELUP) {
+    if (event->type == SDL_MOUSEWHEEL) {
+        if (event->wheel.y > 0) {
             /* Zoom in. */
             if (region_map->zoom < RM_ZOOM_MAX) {
                 region_map_resize(region_map, RM_ZOOM_PROGRESS);
                 return 1;
             }
-        } else if (event->button.button == SDL_BUTTON_WHEELDOWN) {
+        } else if (event->wheel.y < 0) {
             /* Zoom out. */
             if (region_map->zoom > RM_ZOOM_MIN) {
                 region_map_resize(region_map, -RM_ZOOM_PROGRESS);
                 return 1;
             }
-        } else if (event->button.button == SDL_BUTTON_MIDDLE &&
+        }
+    } else if (event->type == SDL_MOUSEBUTTONDOWN) {
+        if (event->button.button == SDL_BUTTON_MIDDLE &&
                 setting_get_int(OPT_CAT_DEVEL, OPT_OPERATOR) &&
                 RM_IN_MAP(popup, event->motion.x, event->motion.y)) {
             int xpos, ypos, map_x, map_y, map_w, map_h;

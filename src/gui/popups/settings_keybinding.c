@@ -104,7 +104,7 @@ static void keybinding_apply(void)
  * @return
  * 1 if the key was handled, 0 otherwise.
  */
-static int keybinding_action(SDLKey key)
+static int keybinding_action(SDL_Keycode key)
 {
     if (key == SDLK_n) {
         /* Create a new keybinding. */

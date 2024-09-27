@@ -243,19 +243,18 @@ popup_event_func (popup_struct *popup, SDL_Event *event)
 {
     popup_painting_t *painting_data = popup->custom_data;
 
-    if (event->type == SDL_MOUSEBUTTONDOWN) {
+    if (event->type == SDL_MOUSEWHEEL) {
         if (event->button.button == SDL_BUTTON_LEFT) {
             painting_data->mx = event->motion.x;
             painting_data->my = event->motion.y;
-        } else if (event->button.button == SDL_BUTTON_WHEELUP ||
-                   event->button.button == SDL_BUTTON_WHEELDOWN) {
+        } else if (event->wheel.y > 0 || event->wheel.y < 0) {
             if (painting_data->zoomed != NULL) {
                 SDL_FreeSurface(painting_data->zoomed);
                 painting_data->zoomed = NULL;
             }
 
             double zoom = 0.1;
-            if (event->button.button == SDL_BUTTON_WHEELDOWN) {
+            if (event->wheel.y < 0) {
                 zoom = -zoom;
             }
 

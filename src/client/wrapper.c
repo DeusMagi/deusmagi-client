@@ -42,7 +42,7 @@ void system_start(void)
         video_set_icon(icon);
     }
 
-    SDL_WM_SetCaption(PACKAGE_NAME, PACKAGE_NAME);
+    SDL_SetWindowTitle(ScreenWindow, PACKAGE_NAME);
 }
 
 /**
