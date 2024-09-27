@@ -347,7 +347,7 @@ static int popup_event_func(popup_struct *popup, SDL_Event *event)
                 if (event->key.keysym.sym >= SDLK_KP_0 && event->key.keysym.sym <= SDLK_KP_9) {
                     c = '0' + event->key.keysym.sym - SDLK_KP_0;
                 } else {
-                    c = 0xff;
+                    c = event->key.keysym.sym;
                 }
 
                 len = strlen(character_shortcuts);
