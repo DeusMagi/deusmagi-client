@@ -340,7 +340,7 @@ static int popup_event_func(popup_struct *popup, SDL_Event *event)
 
         default:
 
-            if (!keys[event->key.keysym.sym].repeated) {
+            if (!keys[event->key.keysym.scancode].repeated) {
                 char c;
                 size_t i, len, links_len;
 
@@ -364,7 +364,7 @@ static int popup_event_func(popup_struct *popup, SDL_Event *event)
             break;
         }
 
-        if (keybind_command_matches_event("?HELLO", &event->key) && !keys[event->key.keysym.sym].repeated) {
+        if (keybind_command_matches_event("?HELLO", &event->key) && !keys[event->key.keysym.scancode].repeated) {
             button_hello_event();
             return 1;
         }

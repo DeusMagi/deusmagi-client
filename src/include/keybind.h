@@ -55,6 +55,6 @@ typedef struct keybind_struct {
 /** Ticks that must pass before the key begins repeating. */
 #define KEY_REPEAT_TIME_INIT (175)
 /** Check whether the specified key is a modifier key. */
-#define KEY_IS_MODIFIER(_key) ((_key) >= SDLK_NUMLOCKCLEAR)
+#define KEY_IS_MODIFIER(_key) ((_key) >= SDL_SCANCODE_NUMLOCKCLEAR)
 
 #endif

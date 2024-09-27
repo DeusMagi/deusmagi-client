@@ -85,7 +85,7 @@ static int widget_event(widgetdata *widget, SDL_Event *event)
 
         if (SDL_GetTicks() - widget->showed_ticks > 125 && ((string_startswith(input->prepend_text, "/gettag ") && keybind_command_matches_event("?GET", &event->key)) || (string_startswith(input->prepend_text, "/droptag ") && keybind_command_matches_event("?DROP", &event->key)))) {
             widget_input_handle_enter(widget);
-            keys[event->key.keysym.sym].time = SDL_GetTicks() + 125;
+            keys[event->key.keysym.scancode].time = SDL_GetTicks() + 125;
             return 1;
         }
 

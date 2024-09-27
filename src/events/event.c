@@ -152,13 +152,13 @@ int Event_PollInputDevice(void)
         y = event.motion.y;
 
         if (event.type == SDL_KEYDOWN) {
-            if (!keys[event.key.keysym.sym].pressed) {
-                keys[event.key.keysym.sym].repeated = 0;
-                keys[event.key.keysym.sym].pressed = 1;
-                keys[event.key.keysym.sym].time = LastTick + KEY_REPEAT_TIME_INIT;
+            if (!keys[event.key.keysym.scancode].pressed) {
+                keys[event.key.keysym.scancode].repeated = 0;
+                keys[event.key.keysym.scancode].pressed = 1;
+                keys[event.key.keysym.scancode].time = LastTick + KEY_REPEAT_TIME_INIT;
             }
         } else if (event.type == SDL_KEYUP) {
-            keys[event.key.keysym.sym].pressed = 0;
+            keys[event.key.keysym.scancode].pressed = 0;
         } else if (event.type == SDL_MOUSEMOTION) {
             tooltip_dismiss();
         }
