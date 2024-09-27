@@ -807,6 +807,7 @@ int main(int argc, char *argv[])
         }
 
         if (update) {
+            SDL_FillRect(ScreenSurface, NULL, 0);
             SDL_SetRenderDrawColor(ScreenRenderer, 0, 0, 0, 255);
         }
 
