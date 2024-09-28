@@ -3,19 +3,13 @@
 CMakeFiles
 CMakeCache.txt
 Makefile
+cmake_install.cmake
 
 # CMake Headers
 
 cmake.h
 gitversion.h
 version.h
-
-# CMake Packaging
-
-cmake_install.cmake
-CPackConfig.cmake
-CPackSourceConfig.cmake
-_CPack_Packages/
 
 # General
 

@@ -174,7 +174,7 @@ foreach (var ${SOURCES})
     set(SOURCES_STRING "${SOURCES_STRING};${var}")
 endforeach ()
 
-# Installer.
+# Installer
 if (WIN32 AND NOT UNIX)
     set(INSTALL_SUBDIR_BIN ".")
     set(INSTALL_SUBDIR_SHARE ".")
@@ -205,53 +205,7 @@ install(DIRECTORY textures cache data fonts gfx_user schemas settings sound srv_
 
 include(InstallRequiredSystemLibraries)
 
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Fantasy multiplayer online role-playing game")
-set(CPACK_PACKAGE_VENDOR "Deus Magi Development Team")
-set(CPACK_PACKAGE_CONTACT "Deus Magi Development Team <admin@deusmagi.com>")
-# set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
-set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.md")
-set(CPACK_PACKAGE_VERSION_MAJOR "4")
-set(CPACK_PACKAGE_VERSION_MINOR "0")
-set(CPACK_PACKAGE_VERSION_PATCH "0")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "Deus Magi")
-
-if (MINGW)
-    set(CPACK_PACKAGE_EXECUTABLES "deusmagi2" "Deus Magi")
-    set(CPACK_CREATE_DESKTOP_LINKS "deusmagi2")
-endif ()
-
-set(CPACK_DEBIAN_PACKAGE_NAME "deusmagi")
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.5), libgcc1 (>= 1:4.1), libsdl2-image (>= 2), libsdl2debian (>= 2), libcurl3 (>= 7.16), libsdl2-mixer (>= 2), libsdl2-ttf (>= 2), timidity (>= 1), zlib1g (>= 1), libx11-6, libxmu6")
-set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Fantasy multiplayer online role-playing game with 2.5D graphics\n .\n Homepage: https://deusmagi.com")
-set(CPACK_DEBIAN_PACKAGE_SECTION "games")
-
-set(CPACK_RPM_PACKAGE_NAME "deusmagi")
-set(CPACK_RPM_PACKAGE_DESCRIPTION "Fantasy multiplayer online role-playing game with 2.5D graphics\n .\n Homepage: https://deusmagi.com")
-set(CPACK_RPM_PACKAGE_LICENSE "GNU General Public License (GPL)")
-set(CPACK_RPM_PACKAGE_GROUP "Games")
-
-set(CPACK_NSIS_INSTALLED_ICON_NAME "deusmagi")
-set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}/textures/icon.ico")
-set(CPACK_NSIS_MUI_UNIICON "${CMAKE_CURRENT_SOURCE_DIR}/textures/icon.ico")
-set(CPACK_NSIS_DISPLAY_NAME "Deus Magi")
-set(CPACK_NSIS_MODIFY_PATH "ON")
-set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
-
-if (${PACKAGE_TYPE} STREQUAL "deb")
-    set(CPACK_BINARY_DEB "ON")
-elseif (${PACKAGE_TYPE} STREQUAL "nsis")
-    set(CPACK_BINARY_NSIS "ON")
-elseif (${PACKAGE_TYPE} STREQUAL "rpm")
-    set(CPACK_BINARY_RPM "ON")
-endif (${PACKAGE_TYPE} STREQUAL "deb")
-
-set(CPACK_BINARY_STGZ "OFF")
-set(CPACK_BINARY_TGZ "OFF")
-set(CPACK_BINARY_TZ "OFF")
-include(CPack)
-
-# Configure the .h file with the configuration options (size of long,
-# package version, etc).
+# Configure the .h file with the configuration options
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/include/cmake.h.def ${CMAKE_CURRENT_SOURCE_DIR}/src/include/cmake.h)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/src/include/version.h.def ${CMAKE_CURRENT_SOURCE_DIR}/src/include/version.h)
 
