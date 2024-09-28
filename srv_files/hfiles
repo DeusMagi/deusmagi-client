@@ -1,7 +1,7 @@
 help main
 title General Help
 msg
-Atrinik is a Multiplayer Online Role-Playing Game started by Alex Tokar in 2009. Visit the Atrinik website at [a=url]http://www.atrinik.org[/a] for FAQ, playing guides, and more.
+Deus Magi is a Multiplayer Online Role-Playing Game. Visit the website at [a=url]http://https://deusmagi.com[/a] for FAQ, playing guides, and more.
 
 Quick help:
 
@@ -1154,7 +1154,7 @@ endmsg
 end
 
 help contributors
-title Atrinik Contributors
+title Game Contributors
 msg
 [font=sans 14][b][o=#000000][c=#cf6900]Programming:[/c][/o][/b][/font][padding=4]
 Alex "[b]Cleo[/b]" Tokar (+maps)
@@ -1422,7 +1422,7 @@ help basics_movement
 title Basics: Movement
 msg
 [title]Movement[/title]
-There are two choices for movement in Atrinik: keyboard and mouse. Mouse-based movement is easier to use, however, the keyboard is more accurate.
+There are two choices for movement: keyboard and mouse. Mouse-based movement is easier to use, however, the keyboard is more accurate.
 
 [b]Mouse:[/b]
 Move the mouse over the map area, and you'll see the square below your mouse highlighted with green borders. If you click that area, your character will try to move there.

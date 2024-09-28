@@ -1,27 +1,3 @@
-/*************************************************************************
- *           Atrinik, a Multiplayer Online Role Playing Game             *
- *                                                                       *
- *   Copyright (C) 2009-2014 Alex Tokar and Atrinik Development Team     *
- *                                                                       *
- * Fork from Crossfire (Multiplayer game for X-windows).                 *
- *                                                                       *
- * This program is free software; you can redistribute it and/or modify  *
- * it under the terms of the GNU General Public License as published by  *
- * the Free Software Foundation; either version 2 of the License, or     *
- * (at your option) any later version.                                   *
- *                                                                       *
- * This program is distributed in the hope that it will be useful,       *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- * GNU General Public License for more details.                          *
- *                                                                       *
- * You should have received a copy of the GNU General Public License     *
- * along with this program; if not, write to the Free Software           *
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.             *
- *                                                                       *
- * The author can be reached at admin@atrinik.org                        *
- ************************************************************************/
-
 /**
  * @file
  * General convenience functions for the client.
@@ -379,7 +355,7 @@ char *file_path(const char *path, const char *mode)
             "Path is already absolute: %s", path);
 
     sb = stringbuffer_new();
-    stringbuffer_append_printf(sb, "%s/.atrinik/%s/%s", get_config_dir(),
+    stringbuffer_append_printf(sb, "%s/.deusmagi/%s/%s", get_config_dir(),
             package_get_version_partial(VS(version)), path);
     new_path = stringbuffer_sub(sb, 0, 0);
 
@@ -491,7 +467,7 @@ char *file_path_server(const char *path)
  * that are related to file opening and reading/writing.
  *
  * For GNU/Linux, they call file_path() to determine the path to the file
- * to open in ~/.atrinik, and if the file doesn't exist there, copy it
+ * to open in ~/.deusmagi, and if the file doesn't exist there, copy it
  * there from the directory the client is running in.
  *@{*/
 

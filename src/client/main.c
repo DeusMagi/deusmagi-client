@@ -1,27 +1,3 @@
-/*************************************************************************
- *           Atrinik, a Multiplayer Online Role Playing Game             *
- *                                                                       *
- *   Copyright (C) 2009-2014 Alex Tokar and Atrinik Development Team     *
- *                                                                       *
- * Fork from Crossfire (Multiplayer game for X-windows).                 *
- *                                                                       *
- * This program is free software; you can redistribute it and/or modify  *
- * it under the terms of the GNU General Public License as published by  *
- * the Free Software Foundation; either version 2 of the License, or     *
- * (at your option) any later version.                                   *
- *                                                                       *
- * This program is distributed in the hope that it will be useful,       *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- * GNU General Public License for more details.                          *
- *                                                                       *
- * You should have received a copy of the GNU General Public License     *
- * along with this program; if not, write to the Free Software           *
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.             *
- *                                                                       *
- * The author can be reached at admin@atrinik.org                        *
- ************************************************************************/
-
 /**
  * @file
  * Client main related functions.
@@ -633,13 +609,13 @@ int main(int argc, char *argv[])
      * the client or a Windows one. */
     char user_agent[MAX_BUF];
 #if defined(WIN32)
-    snprintf(VS(user_agent), "Atrinik Client (Win32)/%s (%d)",
+    snprintf(VS(user_agent), "Deus Magi Client (Win32)/%s (%d)",
              version, SOCKET_VERSION);
 #elif defined(__GNUC__)
-    snprintf(VS(user_agent), "Atrinik Client (GNU/Linux)/%s (%d)",
+    snprintf(VS(user_agent), "Deus Magi Client (GNU/Linux)/%s (%d)",
              version, SOCKET_VERSION);
 #else
-    snprintf(VS(user_agent), "Atrinik Client (Unknown)/%s (%d)",
+    snprintf(VS(user_agent), "Deus Magi Client (Unknown)/%s (%d)",
              version, SOCKET_VERSION);
 #endif
 
@@ -698,7 +674,7 @@ int main(int argc, char *argv[])
 
     StringBuffer *sb = stringbuffer_new();
     stringbuffer_append_printf(sb,
-                               "%s/.atrinik/%s",
+                               "%s/.deus magi/%s",
                                get_config_dir(),
                                version);
     path = stringbuffer_finish(sb);
@@ -706,7 +682,7 @@ int main(int argc, char *argv[])
     efree(path);
 
     char buf[HUGE_BUF];
-    snprintf(VS(buf), "Welcome to Atrinik version %s", version);
+    snprintf(VS(buf), "Welcome to Deus Magi version %s", version);
 #ifdef GITVERSION
     snprintfcat(VS(buf), "%s",
                 " (" STRINGIFY(GITBRANCH) "/" STRINGIFY(GITVERSION)

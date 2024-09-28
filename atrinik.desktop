@@ -2,12 +2,12 @@
 Type=Application
 Version=1.0
 Encoding=UTF-8
-Name=Atrinik
-Name[en]=Atrinik
+Name=Deus Magi
+Name[en]=Deus Magi
 GenericName=Online RPG Game
 Comment=Multiplayer Online Role Playing Game
-Icon=atrinik.png
-Exec=atrinik
+Icon=deusmagi.png
+Exec=deusmagi
 Terminal=false
 StartupNotify=false
 Categories=Game;AdventureGame;

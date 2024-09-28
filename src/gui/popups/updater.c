@@ -1,27 +1,3 @@
-/*************************************************************************
- *           Atrinik, a Multiplayer Online Role Playing Game             *
- *                                                                       *
- *   Copyright (C) 2009-2014 Alex Tokar and Atrinik Development Team     *
- *                                                                       *
- * Fork from Crossfire (Multiplayer game for X-windows).                 *
- *                                                                       *
- * This program is free software; you can redistribute it and/or modify  *
- * it under the terms of the GNU General Public License as published by  *
- * the Free Software Foundation; either version 2 of the License, or     *
- * (at your option) any later version.                                   *
- *                                                                       *
- * This program is distributed in the hope that it will be useful,       *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- * GNU General Public License for more details.                          *
- *                                                                       *
- * You should have received a copy of the GNU General Public License     *
- * along with this program; if not, write to the Free Software           *
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.             *
- *                                                                       *
- * The author can be reached at admin@atrinik.org                        *
- ************************************************************************/
-
 /**
  * @file
  * Handles the update popup, which is triggered by clicking the 'Update'
@@ -46,7 +22,7 @@
  * the update (starting with zero and increasing each time a new file is
  * downloaded) and is padded with zeroes. The directory the file is saved
  * in is determined by updater_get_dir(). On Windows, for example, it
- * would be stored in %AppData%/.atrinik/temp. It is not saved in the
+ * would be stored in %AppData%/.deusmagi/temp. It is not saved in the
  * same directory as the client executable due to Windows UAC, which
  * marks various directories, including Program Files as protected.
  *
@@ -59,13 +35,12 @@
  * tells the user to restart their client to apply the updates, and shows
  * a handy 'Restart' button, which closes the client and opens it again.
  * This is done by calling up_dater.exe - which is also the executable
- * called by shortcuts - which runs atrinik_updater.bat as administrator
+ * called by shortcuts - which runs deusmagi_updater.bat as administrator
  * (popping up UAC prompt), which extracts the downloaded updates,
  * removes the temporary directory, and starts up the client. If there
- * are no updates, up_dater.exe simply starts up the Atrinik client
- * normally.
+ * are no updates, up_dater.exe simply starts up the client normally.
  *
- * The reason there is up_dater.exe and atrinik_updater.bat is that
+ * The reason there is up_dater.exe and deusmagi_updater.bat is that
  * Windows UAC is unable to only prompt for administrator password when
  * requested from a running program - it can only do so when starting up
  * a program, and administrator rights are necessary to write to
@@ -73,7 +48,7 @@
  * installed. up_dater.exe has an underscore in its filename because
  * otherwise Windows would (due to backwards compatibility, or some other
  * reason) popup UAC prompt each time it's started, even when there are
- * no updates available and it's not running atrinik_updater.bat as
+ * no updates available and it's not running deusmagi_updater.bat as
  * administrator.
  *
  * For GNU/Linux:
@@ -123,7 +98,7 @@ static button_struct button_close, button_retry, button_restart;
 static char *
 updater_get_dir (char *buf, size_t len)
 {
-    snprintf(buf, len, "%s/.atrinik/temp", get_config_dir());
+    snprintf(buf, len, "%s/.deusmagi/temp", get_config_dir());
     return buf;
 }
 
@@ -434,8 +409,8 @@ popup_draw_post (popup_struct *popup)
 
             box.y += 60;
 
-            /* Show a restart button, which will call atrinik2.exe to
-             * apply the updates (using atrinik_updater.bat) and restart
+            /* Show a restart button, which will call deusmagi2.exe to
+             * apply the updates (using deusmagi_updater.bat) and restart
              * the client. */
             button_restart.x = box.x + box.w / 2 -
                                texture_surface(button_restart.texture)->w / 2;
@@ -456,8 +431,8 @@ popup_draw_post (popup_struct *popup)
             text_show_shadow(ScreenSurface,
                              FONT_ARIAL11,
                              "manager to update, or visit "
-                             "[a=url:http://www.atrinik.org/]"
-                             "www.atrinik.org[/a] for help.",
+                             "[a=url:http://deusmagi.com/]"
+                             "deusmagi.com[/a] for help.",
                              box.x,
                              box.y,
                              COLOR_WHITE,
@@ -532,7 +507,7 @@ popup_event (popup_struct *popup, SDL_Event *event)
 #ifdef WIN32
     } else if (button_event(&button_restart, event)) {
         char path[HUGE_BUF], wdir[HUGE_BUF];
-        snprintf(VS(path), "%s\\atrinik2.exe", getcwd(wdir, sizeof(wdir) - 1));
+        snprintf(VS(path), "%s\\deusmagi2.exe", getcwd(wdir, sizeof(wdir) - 1));
         ShellExecute(NULL, "open", path, NULL, NULL, SW_SHOWNORMAL);
         exit(0);
         return 1;

@@ -1,6 +1,4 @@
-# The Atrinik CMakeLists file.
-
-project(atrinik C)
+project(deusmagi C)
 cmake_minimum_required(VERSION 3.2)
 
 # Include build configuration.
@@ -10,9 +8,9 @@ if (EXISTS build.user)
     include(build.user)
 endif ()
 
-set(EXECUTABLE atrinik)
-set(EXECUTABLE_UPDATER atrinik2)
-set(PACKAGE_NAME "Atrinik Client")
+set(EXECUTABLE deusmagi)
+set(EXECUTABLE_UPDATER deusmagi2)
+set(PACKAGE_NAME "Deus Magi Client")
 
 # Add our includes.
 include_directories(common)
@@ -135,19 +133,19 @@ endif ()
 include(src/cmake.txt)
 
 if (MINGW)
-    ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/atrinikrc.o
+    ADD_CUSTOM_COMMAND(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/deusmagirc.o
             COMMAND ${CMAKE_RC_COMPILER} -I${CMAKE_CURRENT_SOURCE_DIR}
-            -i${CMAKE_CURRENT_SOURCE_DIR}/atrinik.rc
-            -o ${CMAKE_CURRENT_BINARY_DIR}/atrinikrc.o
+            -i${CMAKE_CURRENT_SOURCE_DIR}/deusmagi.rc
+            -o ${CMAKE_CURRENT_BINARY_DIR}/deusmagirc.o
             VERBATIM)
-    SET(SOURCES ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/atrinikrc.o")
+    SET(SOURCES ${SOURCES} "${CMAKE_CURRENT_BINARY_DIR}/deusmagirc.o")
     add_executable(${EXECUTABLE_UPDATER}
-        src/updater/main.c "${CMAKE_CURRENT_BINARY_DIR}/atrinikrc.o")
+        src/updater/main.c "${CMAKE_CURRENT_BINARY_DIR}/deusmagirc.o")
 endif ()
 
 # Compile the sources into an executable.
 add_executable(${EXECUTABLE} WIN32 ${SOURCES})
-target_link_libraries(${EXECUTABLE} atrinik-toolkit)
+target_link_libraries(${EXECUTABLE} deusmagi-toolkit)
 target_link_libraries(${EXECUTABLE} -Xlinker --allow-multiple-definition)
 
 # Link all the available libraries.
@@ -183,21 +181,21 @@ if (WIN32 AND NOT UNIX)
     set(INSTALL_SUBDIR_DOC ".")
 
     file(GLOB DLLS "${CMAKE_CURRENT_SOURCE_DIR}/*.dll")
-    set(EXES gunzip.exe tar.exe atrinik.bat ca-bundle.crt timidity.cfg)
+    set(EXES gunzip.exe tar.exe deusmagi.bat ca-bundle.crt timidity.cfg)
     install(FILES ${DLLS} DESTINATION ${INSTALL_SUBDIR_BIN})
-    install(TARGETS atrinik2 DESTINATION ${INSTALL_SUBDIR_BIN})
+    install(TARGETS deusmagi2 DESTINATION ${INSTALL_SUBDIR_BIN})
     install(FILES ${EXES} DESTINATION ${INSTALL_SUBDIR_BIN})
     install(DIRECTORY timidity DESTINATION ${INSTALL_SUBDIR_BIN})
 else ()
     set(INSTALL_SUBDIR_BIN "games")
-    set(INSTALL_SUBDIR_SHARE "share/games/atrinik")
-    set(INSTALL_SUBDIR_DOC "share/doc/atrinik")
+    set(INSTALL_SUBDIR_SHARE "share/games/deusmagi")
+    set(INSTALL_SUBDIR_DOC "share/doc/deusmagi")
 
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/atrinik.desktop DESTINATION "share/applications")
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/textures/icon.png DESTINATION "share/pixmaps" RENAME "atrinik.png")
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/deusmagi.desktop DESTINATION "share/applications")
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/textures/icon.png DESTINATION "share/pixmaps" RENAME "deusmagi.png")
 endif ()
 
-install(TARGETS atrinik DESTINATION ${INSTALL_SUBDIR_BIN})
+install(TARGETS deusmagi DESTINATION ${INSTALL_SUBDIR_BIN})
 install(FILES
         # ${CMAKE_CURRENT_SOURCE_DIR}/README.md
         ${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.md
@@ -208,34 +206,34 @@ install(DIRECTORY textures cache data fonts gfx_user schemas settings sound srv_
 include(InstallRequiredSystemLibraries)
 
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Fantasy multiplayer online role-playing game")
-set(CPACK_PACKAGE_VENDOR "Atrinik Development Team")
-set(CPACK_PACKAGE_CONTACT "Atrinik Development Team <admin@atrinik.org>")
+set(CPACK_PACKAGE_VENDOR "Deus Magi Development Team")
+set(CPACK_PACKAGE_CONTACT "Deus Magi Development Team <admin@deusmagi.com>")
 # set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.md")
 set(CPACK_PACKAGE_VERSION_MAJOR "4")
 set(CPACK_PACKAGE_VERSION_MINOR "0")
 set(CPACK_PACKAGE_VERSION_PATCH "0")
-set(CPACK_PACKAGE_INSTALL_DIRECTORY "Atrinik")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "Deus Magi")
 
 if (MINGW)
-    set(CPACK_PACKAGE_EXECUTABLES "atrinik2" "Atrinik")
-    set(CPACK_CREATE_DESKTOP_LINKS "atrinik2")
+    set(CPACK_PACKAGE_EXECUTABLES "deusmagi2" "Deus Magi")
+    set(CPACK_CREATE_DESKTOP_LINKS "deusmagi2")
 endif ()
 
-set(CPACK_DEBIAN_PACKAGE_NAME "atrinik")
+set(CPACK_DEBIAN_PACKAGE_NAME "deusmagi")
 set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.5), libgcc1 (>= 1:4.1), libsdl2-image (>= 2), libsdl2debian (>= 2), libcurl3 (>= 7.16), libsdl2-mixer (>= 2), libsdl2-ttf (>= 2), timidity (>= 1), zlib1g (>= 1), libx11-6, libxmu6")
-set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Fantasy multiplayer online role-playing game with 2.5D graphics\n .\n Homepage: http://www.atrinik.org/")
+set(CPACK_DEBIAN_PACKAGE_DESCRIPTION "Fantasy multiplayer online role-playing game with 2.5D graphics\n .\n Homepage: https://deusmagi.com")
 set(CPACK_DEBIAN_PACKAGE_SECTION "games")
 
-set(CPACK_RPM_PACKAGE_NAME "atrinik")
-set(CPACK_RPM_PACKAGE_DESCRIPTION "Fantasy multiplayer online role-playing game with 2.5D graphics\n .\n Homepage: http://www.atrinik.org/")
+set(CPACK_RPM_PACKAGE_NAME "deusmagi")
+set(CPACK_RPM_PACKAGE_DESCRIPTION "Fantasy multiplayer online role-playing game with 2.5D graphics\n .\n Homepage: https://deusmagi.com")
 set(CPACK_RPM_PACKAGE_LICENSE "GNU General Public License (GPL)")
 set(CPACK_RPM_PACKAGE_GROUP "Games")
 
-set(CPACK_NSIS_INSTALLED_ICON_NAME "atrinik")
+set(CPACK_NSIS_INSTALLED_ICON_NAME "deusmagi")
 set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}/textures/icon.ico")
 set(CPACK_NSIS_MUI_UNIICON "${CMAKE_CURRENT_SOURCE_DIR}/textures/icon.ico")
-set(CPACK_NSIS_DISPLAY_NAME "Atrinik")
+set(CPACK_NSIS_DISPLAY_NAME "Deus Magi")
 set(CPACK_NSIS_MODIFY_PATH "ON")
 set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 

@@ -1,27 +1,3 @@
-/*************************************************************************
- *           Atrinik, a Multiplayer Online Role Playing Game             *
- *                                                                       *
- *   Copyright (C) 2009-2014 Alex Tokar and Atrinik Development Team     *
- *                                                                       *
- * Fork from Crossfire (Multiplayer game for X-windows).                 *
- *                                                                       *
- * This program is free software; you can redistribute it and/or modify  *
- * it under the terms of the GNU General Public License as published by  *
- * the Free Software Foundation; either version 2 of the License, or     *
- * (at your option) any later version.                                   *
- *                                                                       *
- * This program is distributed in the hope that it will be useful,       *
- * but WITHOUT ANY WARRANTY; without even the implied warranty of        *
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
- * GNU General Public License for more details.                          *
- *                                                                       *
- * You should have received a copy of the GNU General Public License     *
- * along with this program; if not, write to the Free Software           *
- * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.             *
- *                                                                       *
- * The author can be reached at admin@atrinik.org                        *
- ************************************************************************/
-
 /**
  * @file
  * Header file for things that are generally used in many places.
@@ -38,7 +14,7 @@
 #define MAXSTRING 20
 
 /**
- * Structure containing Atrinik server certificate information.
+ * Structure containing server certificate information.
  */
 typedef struct server_cert_info {
     char *name; ///< Server name.
@@ -85,11 +61,11 @@ typedef struct server_struct {
     /** Certificate public key. */
     char *cert_pubkey;
 
-    /** Atrinik certificate entry. */
+    /** Certificate entry. */
     char *cert;
 
     /**
-     * Atrinik certificate signature. The certificate is invalid without
+     * Certificate signature. The certificate is invalid without
      * a valid signature.
      */
     unsigned char *cert_sig;
@@ -135,7 +111,7 @@ typedef struct msg_anim_struct {
     char color[COLOR_BUF];
 } msg_anim_struct;
 
-#define FILE_ATRINIK_P0 "data/atrinik.p0"
+#define FILE_GAME_P0 "data/game.p0"
 
 /* Face requested from server - do it only one time */
 #define FACE_REQUESTED      16
