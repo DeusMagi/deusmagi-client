@@ -813,6 +813,9 @@ int main(int argc, char *argv[])
                          cursor_y - texture_surface(cursor_texture)->h / 2,
                          NULL,
                          texture_surface(cursor_texture));
+            SDL_ShowCursor(SDL_DISABLE);
+        } else {
+            SDL_ShowCursor(SDL_ENABLE);
         }
 
         texture_gc();
