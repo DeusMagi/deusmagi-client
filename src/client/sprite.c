@@ -45,7 +45,7 @@ sprite_init_system (void)
                                         0x00FF0000,
                                         0x0000FF00,
                                         0x000000FF);
-    SDL_SetSurfaceAlphaMod(FormatHolder, 255);
+    SDL_SetSurfaceBlendMode(FormatHolder, SDL_BLENDMODE_BLEND);
 }
 
 /**
@@ -1458,7 +1458,8 @@ surface_set_alpha (SDL_Surface *surface, uint8_t alpha)
     SDL_PixelFormat *fmt = surface->format;
 
     if (fmt->Amask == 0) {
-        SDL_SetSurfaceAlphaMod(surface, alpha);
+        surface->format->Amask = alpha;
+        SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
     } else {
         Uint8 bpp = fmt->BytesPerPixel;
         double scale = alpha / 255.0f;

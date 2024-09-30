@@ -237,7 +237,8 @@ static void widget_draw(widgetdata *widget)
 
     dst.x = widget->x;
     dst.y = widget->y;
-    SDL_SetSurfaceAlphaMod(widget->surface, notification->alpha);
+    widget->surface->format->Amask = notification->alpha;
+    SDL_SetSurfaceBlendMode(widget->surface, SDL_BLENDMODE_BLEND);
     SDL_BlitSurface(widget->surface, NULL, ScreenSurface, &dst);
 
     /* Do highlight. */
