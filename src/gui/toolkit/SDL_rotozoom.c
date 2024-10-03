@@ -1274,7 +1274,7 @@ SDL_Surface *rotozoomSurfaceXY(SDL_Surface * src, double angle, double zoomx, do
             /*
              * Turn on source-alpha support
              */
-            SDL_SetSurfaceBlendMode(rz_dst, SDL_BLENDMODE_BLEND);
+            SDL_SetSurfaceAlphaMod(rz_dst, 255);
             SDL_SetColorKey(rz_dst, SDL_TRUE | SDL_RLEACCEL, _colorkey(rz_src));
         } else {
             /*
@@ -1368,7 +1368,7 @@ SDL_Surface *rotozoomSurfaceXY(SDL_Surface * src, double angle, double zoomx, do
             /*
              * Turn on source-alpha support
              */
-            SDL_SetSurfaceBlendMode(rz_dst, SDL_BLENDMODE_BLEND);
+            SDL_SetSurfaceAlphaMod(rz_dst, 255);
             SDL_SetColorKey(rz_dst, SDL_TRUE | SDL_RLEACCEL, _colorkey(rz_src));
         } else {
             /*
@@ -1589,7 +1589,7 @@ SDL_Surface *zoomSurface(SDL_Surface * src, double zoomx, double zoomy, int smoo
         /*
          * Turn on source-alpha support
          */
-        SDL_SetSurfaceBlendMode(rz_dst, SDL_BLENDMODE_BLEND);
+        SDL_SetSurfaceAlphaMod(rz_dst, 255);
     } else {
         /*
          * Copy palette and colorkey info
@@ -1743,7 +1743,7 @@ SDL_Surface *shrinkSurface(SDL_Surface *src, int factorx, int factory)
         /*
          * Turn on source-alpha support
          */
-        SDL_SetSurfaceBlendMode(rz_dst, SDL_BLENDMODE_BLEND);
+        SDL_SetSurfaceAlphaMod(rz_dst, 255);
     } else {
         /*
          * Copy palette and colorkey info

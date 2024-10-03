@@ -1788,8 +1788,7 @@ int text_show_character(font_struct **font, font_struct *orig_font, SDL_Surface 
                 /* Remove black border. */
                 SDL_SetColorKey(ttf_surface, SDL_TRUE, 0);
                 /* Set the opacity. */
-                ttf_surface->format->Amask = info->used_alpha;
-                SDL_SetSurfaceBlendMode(ttf_surface, SDL_BLENDMODE_BLEND);
+                SDL_SetSurfaceAlphaMod(ttf_surface, info->used_alpha);
                 /* Create new surface to blit. */
                 new_ttf_surface = SDL_ConvertSurfaceFormat(ttf_surface, SDL_PIXELFORMAT_RGBA8888, 0);
                 /* Free the old one. */
