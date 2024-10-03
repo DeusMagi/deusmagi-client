@@ -163,6 +163,8 @@ int Event_PollInputDevice(void)
             if (event.type == SDL_MOUSEMOTION) {
                 cursor_x = x;
                 cursor_y = y;
+                
+                SDL_SetCursor(system_cursor_arrow);
                 cursor_texture = texture_get(TEXTURE_TYPE_CLIENT, "cursor_default");
             }
 

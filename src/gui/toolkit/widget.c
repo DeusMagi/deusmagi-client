@@ -1501,6 +1501,7 @@ int widget_event_move_stop(int x, int y)
     /* No widgets are being moved now. */
     widget_event_move.owner = NULL;
 
+    SDL_SetCursor(system_cursor_arrow);
     cursor_texture = texture_get(TEXTURE_TYPE_CLIENT, "cursor_default");
 
     /* Somehow the owner before the widget dragging is gone now. Not a
@@ -1667,8 +1668,10 @@ static void process_widgets_rec(int draw, widgetdata *widget)
                 } else if (widget->resize_flags == (RESIZE_TOP | RESIZE_RIGHT) || widget->resize_flags == (RESIZE_BOTTOM | RESIZE_LEFT)) {
                     cursor_texture = texture_get(TEXTURE_TYPE_CLIENT, "cursor_resize_tr2bl");
                 } else if (widget->resize_flags & (RESIZE_LEFT | RESIZE_RIGHT)) {
+                    SDL_SetCursor(system_cursor_sizewe);
                     cursor_texture = texture_get(TEXTURE_TYPE_CLIENT, "cursor_resize_hor");
                 } else if (widget->resize_flags & (RESIZE_TOP | RESIZE_BOTTOM)) {
+                    SDL_SetCursor(system_cursor_sizens);
                     cursor_texture = texture_get(TEXTURE_TYPE_CLIENT, "cursor_resize_ver");
                 }
             }
@@ -1746,6 +1749,7 @@ static void process_widgets_rec(int draw, widgetdata *widget)
 void process_widgets(int draw)
 {
     if (draw && widget_event_move.active) {
+        SDL_SetCursor(system_cursor_sizeall);
         cursor_texture = texture_get(TEXTURE_TYPE_CLIENT, "cursor_move");
     }
 

@@ -783,4 +783,12 @@ extern int textwin_tabs_height(widgetdata *widget);
 extern void textwin_create_scrollbar(widgetdata *widget);
 extern void widget_textwin_init(widgetdata *widget);
 extern void widget_textwin_handle_console(const char *text);
+
+extern SDL_Cursor* system_cursor_arrow;
+extern SDL_Cursor* system_cursor_hand;
+extern SDL_Cursor* system_cursor_ibeam;
+extern SDL_Cursor* system_cursor_sizeall;
+extern SDL_Cursor* system_cursor_sizens;
+extern SDL_Cursor* system_cursor_sizewe;
+
 #endif

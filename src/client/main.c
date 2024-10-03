@@ -81,6 +81,13 @@ static int keepalive_ping; ///< Last keepalive ping time.
 static int keepalive_ping_avg; ///< Average keepalive ping time.
 static int keepalive_ping_num; ///< Number of keepalive pings.
 
+SDL_Cursor* system_cursor_arrow;
+SDL_Cursor* system_cursor_hand;
+SDL_Cursor* system_cursor_ibeam;
+SDL_Cursor* system_cursor_sizeall;
+SDL_Cursor* system_cursor_sizens;
+SDL_Cursor* system_cursor_sizewe;
+
 /**
  * Reset keepalive data.
  */
@@ -671,7 +678,14 @@ int main(int argc, char *argv[])
     server_files_init();
     toolkit_widget_init();
     resources_init();
-
+    
+    system_cursor_arrow = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_ARROW);
+    system_cursor_hand = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_HAND);
+    system_cursor_ibeam = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_IBEAM);
+    system_cursor_sizeall = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZEALL);
+    system_cursor_sizens = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZENS);
+    system_cursor_sizewe = SDL_CreateSystemCursor(SDL_SYSTEM_CURSOR_SIZEWE);
+    
     StringBuffer *sb = stringbuffer_new();
     stringbuffer_append_printf(sb,
                                "%s/.deus magi/%s",
@@ -700,6 +714,7 @@ int main(int argc, char *argv[])
 
     atexit(system_end);
 
+    SDL_SetCursor(system_cursor_arrow);
     cursor_texture = texture_get(TEXTURE_TYPE_CLIENT, "cursor_default");
 
     sound_background_hook_register(sound_background_hook);
@@ -755,8 +770,12 @@ int main(int argc, char *argv[])
             play_action_sounds();
         }
 
-        update = 0;
+        update = 1; // 0
 
+        /* Disabling this for now ...
+         * - it appears to introduce glitches with mouse events
+         *   and redrawing when the screen resolution is changed
+        
         if (!(SDL_GetWindowFlags(ScreenWindow) & (SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_INPUT_FOCUS))) {
         } else if (cpl.state == ST_PLAY) {
             static int old_cursor_x = -1, old_cursor_y = -1;
@@ -781,7 +800,9 @@ int main(int argc, char *argv[])
         } else {
             update = 1;
         }
-
+        
+        */
+        
         if (update) {
             SDL_FillRect(ScreenSurface, NULL, 0);
             SDL_SetRenderDrawColor(ScreenRenderer, 0, 0, 0, 255);
@@ -799,24 +820,30 @@ int main(int argc, char *argv[])
         /* Show the currently dragged item. */
         if (event_dragging_check()) {
             int mx, my;
-
             SDL_GetMouseState(&mx, &my);
+            
             object_show_centered(ScreenSurface, object_find(cpl.dragging_tag),
                     mx, my, INVENTORY_ICON_SIZE, INVENTORY_ICON_SIZE, false);
         }
 
+        /* Disabling this for now ...
+         * - SDL is unable to hide the system cursor on WSL / x11
+         * - the surface coordinates get messed up when changing resolution
+         * - the rendering is slow and so the cursor is slightly out of sync
+         
         if (!setting_get_int(OPT_CAT_CLIENT, OPT_SYSTEM_CURSOR) &&
-            cursor_x != -1 && cursor_y != -1 &&
             SDL_GetWindowFlags(ScreenWindow) & SDL_WINDOW_MOUSE_FOCUS) {
+            int mx, my;
+            SDL_GetMouseState(&mx, &my);
+            
             surface_show(ScreenSurface,
-                         cursor_x - texture_surface(cursor_texture)->w / 2,
-                         cursor_y - texture_surface(cursor_texture)->h / 2,
+                         mx - texture_surface(cursor_texture)->w / 2,
+                         my - texture_surface(cursor_texture)->h / 2,
                          NULL,
                          texture_surface(cursor_texture));
-            SDL_ShowCursor(SDL_DISABLE);
-        } else {
-            SDL_ShowCursor(SDL_ENABLE);
         }
+        
+        */
 
         texture_gc();
         font_gc();

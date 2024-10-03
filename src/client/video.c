@@ -319,18 +319,38 @@ int video_get_bpp(void)
  */
 int video_set_size(void)
 {
+    int wWin = setting_get_int(OPT_CAT_CLIENT, OPT_RESOLUTION_X);
+    int hWin = setting_get_int(OPT_CAT_CLIENT, OPT_RESOLUTION_Y);
+    
+    // enforce our minimum screen size
+    // this needs to match our logical render size,
+    // which is the screen size our UI was built for
+    int wWinMin = 1024;
+    int hWinMin = 768;
+    
+    if (wWin < wWinMin || hWin < hWinMin) {
+        wWin = wWinMin;
+        hWin = hWinMin;
+    }
+    
     SDL_Window *newWindow;
     SDL_Renderer *newRenderer;
     
     SDL_Surface *newSurface;
     SDL_Texture *newTexture;
     
-    SDL_CreateWindowAndRenderer(0, 0, get_video_flags(), &newWindow, &newRenderer);
+    SDL_CreateWindowAndRenderer(
+        wWin,
+        hWin,
+        get_video_flags(),
+        &newWindow,
+        &newRenderer
+    );
     
     newSurface = SDL_CreateRGBSurface(
         0,
-        setting_get_int(OPT_CAT_CLIENT, OPT_RESOLUTION_X),
-        setting_get_int(OPT_CAT_CLIENT, OPT_RESOLUTION_Y),
+        wWin,
+        hWin,
         video_get_bpp(),
         0x00FF0000,
         0x0000FF00,
@@ -342,8 +362,8 @@ int video_set_size(void)
         newRenderer,
         SDL_PIXELFORMAT_ARGB8888,
         SDL_TEXTUREACCESS_STREAMING,
-        setting_get_int(OPT_CAT_CLIENT, OPT_RESOLUTION_X),
-        setting_get_int(OPT_CAT_CLIENT, OPT_RESOLUTION_Y)
+        wWin,
+        hWin
     );
                                             
     if (newSurface) {
@@ -353,7 +373,7 @@ int video_set_size(void)
         ScreenTexture = newTexture;
         
         SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-        SDL_RenderSetLogicalSize(ScreenRenderer, setting_get_int(OPT_CAT_CLIENT, OPT_RESOLUTION_X), setting_get_int(OPT_CAT_CLIENT, OPT_RESOLUTION_Y));
+        SDL_RenderSetLogicalSize(ScreenRenderer, wWinMin, hWinMin);
         
         return 1;
     }
@@ -369,9 +389,9 @@ int video_set_size(void)
  */
 uint32_t get_video_flags(void)
 {
-    // if (setting_get_int(OPT_CAT_CLIENT, OPT_FULLSCREEN)) {
+    if (setting_get_int(OPT_CAT_CLIENT, OPT_FULLSCREEN)) {
         return SDL_WINDOW_FULLSCREEN_DESKTOP;
-    // } else {
-    //     return SDL_WINDOW_RESIZABLE;
-    // }
+    } else {
+        return SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE;
+    }
 }

@@ -224,6 +224,7 @@ int button_event(button_struct *button, SDL_Event *event)
 
     if (BUTTON_MOUSE_OVER(button, event->motion.x, event->motion.y, texture)) {
         if (event->type == SDL_MOUSEMOTION) {
+            SDL_SetCursor(system_cursor_hand);
             cursor_texture = texture_get(TEXTURE_TYPE_CLIENT, "cursor_pointer");
         }
 
