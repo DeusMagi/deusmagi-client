@@ -1446,17 +1446,16 @@ int text_show_character(font_struct **font, font_struct *orig_font, SDL_Surface 
         } else if (tag_len >= 9 && strncmp(tag, "ctooltip=", 9) == 0) {
             if (surface || info->obscured) {
                 int mx, my;
-                float xScale, yScale;
+                float lx, ly;
                 char tooltip_width[MAX_BUF], tooltip_height[MAX_BUF], tooltip_text[HUGE_BUF];
                 int tooltip_max_width;
 
                 SDL_GetMouseState(&mx, &my);
                 
                 // map the mouse coordinates to our logical render size
-                SDL_RenderGetScale(ScreenRenderer, &xScale, &yScale);
-                
-                mx = (int) ((float) mx / xScale);
-                my = (int) ((float) my / yScale);
+                SDL_RenderWindowToLogical(ScreenRenderer, mx, my, &lx, &ly);
+                mx = (int) lx;
+                my = (int) ly;
                 
                 if (text_adjust_coords(surface, &mx, &my) && mx >= dest->x && my >= dest->y && sscanf(tag + 9, "%64s %64s %d %512[^]>]", tooltip_width, tooltip_height, &tooltip_max_width, tooltip_text) == 4) {
                     int wd, ht;
@@ -1691,7 +1690,7 @@ int text_show_character(font_struct **font, font_struct *orig_font, SDL_Surface 
 
         if (info->anchor_tag || info->highlight || *info->tooltip_text != '\0') {
             int state, mx, my, orig_mx, orig_my;
-            float xScale, yScale;
+            float lx, ly;
 
             if (info->anchor_tag && cp == info->anchor_tag && text_anchor_info_ptr) {
                 text_anchor_execute(info, text_anchor_info_ptr);
@@ -1702,15 +1701,14 @@ int text_show_character(font_struct **font, font_struct *orig_font, SDL_Surface 
             orig_my = my;
             
             // map the mouse coordinates to our logical render size
-            SDL_RenderGetScale(ScreenRenderer, &xScale, &yScale);
-            
-            mx = (int) ((float) mx / xScale);
-            my = (int) ((float) my / yScale);
+            SDL_RenderWindowToLogical(ScreenRenderer, mx, my, &lx, &ly);
+            mx = (int) lx;
+            my = (int) ly;
             
             if (text_adjust_coords(surface, &mx, &my)) {
                 // mouse over debugging
-                // LOG(DEBUG, "mx: %d / sx: %f / dx: %d / dw: %d", mx, xScale, dest->x, dest->x + width);
-                // LOG(DEBUG, "my: %d / sy: %f / dy: %d / dh: %d", my, yScale, dest->y, dest->y + FONT_HEIGHT(*font));
+                // LOG(DEBUG, "mx: %d / lx: %f / dx: %d / dw: %d", mx, lx, dest->x, dest->x + width);
+                // LOG(DEBUG, "my: %d / ly: %f / dy: %d / dh: %d", my, ly, dest->y, dest->y + FONT_HEIGHT(*font));
                 
                 if (mx >= dest->x && mx < dest->x + width && my >= dest->y && my < dest->y + FONT_HEIGHT(*font)) {
                     static uint32_t ticks = 0;
@@ -1989,7 +1987,7 @@ void text_show(SDL_Surface *surface, font_struct *font, const char *text, int x,
     size_t num_heights = 0;
     int x_adjust = 0;
     int mx, my, mstate = 0, old_x;
-    float xScale, yScale;
+    float lx, ly;
     int64_t select_start = 0, select_end = 0;
     uint8_t select_color_changed = 0;
     text_info_struct info;
@@ -2029,10 +2027,9 @@ void text_show(SDL_Surface *surface, font_struct *font, const char *text, int x,
         mstate = SDL_GetMouseState(&mx, &my);
         
         // map the mouse coordinates to our logical render size
-        SDL_RenderGetScale(ScreenRenderer, &xScale, &yScale);
-        
-        mx = (int) ((float) mx / xScale);
-        my = (int) ((float) my / yScale);
+        SDL_RenderWindowToLogical(ScreenRenderer, mx, my, &lx, &ly);
+        mx = (int) lx;
+        my = (int) ly;
         
         if (!text_adjust_coords(surface, &mx, &my)) {
             mstate = 0;
