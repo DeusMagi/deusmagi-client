@@ -45,7 +45,6 @@ sprite_init_system (void)
                                         0x00FF0000,
                                         0x0000FF00,
                                         0x000000FF);
-    SDL_SetSurfaceAlphaMod(FormatHolder, 255);
 }
 
 /**
