@@ -322,16 +322,18 @@ int video_set_size(void)
     int wWin = setting_get_int(OPT_CAT_CLIENT, OPT_RESOLUTION_X);
     int hWin = setting_get_int(OPT_CAT_CLIENT, OPT_RESOLUTION_Y);
     
-    // enforce our minimum screen size
-    // this needs to match our logical render size,
-    // which is the screen size our UI was built for
-    int wWinMin = 1024;
-    int hWinMin = 768;
+    // our minimum window size
+    int wWinMin = 1920;
+    int hWinMin = 1080;
     
     if (wWin < wWinMin || hWin < hWinMin) {
         wWin = wWinMin;
         hWin = hWinMin;
     }
+    
+    // the screen size our UI was built for
+    int wRen = 1024;
+    int hRen = 768;
     
     SDL_Window *newWindow;
     SDL_Renderer *newRenderer;
@@ -349,8 +351,8 @@ int video_set_size(void)
     
     newSurface = SDL_CreateRGBSurface(
         0,
-        wWin,
-        hWin,
+        wRen,
+        hRen,
         video_get_bpp(),
         0x00FF0000,
         0x0000FF00,
@@ -362,8 +364,8 @@ int video_set_size(void)
         newRenderer,
         SDL_PIXELFORMAT_ARGB8888,
         SDL_TEXTUREACCESS_STREAMING,
-        wWin,
-        hWin
+        wRen,
+        hRen
     );
                                             
     if (newSurface) {
@@ -373,7 +375,7 @@ int video_set_size(void)
         ScreenTexture = newTexture;
         
         SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
-        SDL_RenderSetLogicalSize(ScreenRenderer, wWinMin, hWinMin);
+        SDL_RenderSetLogicalSize(ScreenRenderer, wRen, hRen);
         
         return 1;
     }
