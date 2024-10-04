@@ -108,8 +108,15 @@ int button_need_redraw(button_struct *button)
 
     if (button->mouse_over || button->pressed) {
         int state, mx, my, mover;
+        float lx, ly;
 
         state = SDL_GetMouseState(&mx, &my);
+        
+        // map the mouse coordinates to our logical render size
+        SDL_RenderWindowToLogical(ScreenRenderer, mx, my, &lx, &ly);
+        mx = (int) lx;
+        my = (int) ly;
+        
         mover = BUTTON_MOUSE_OVER(button, mx, my, texture_surface(button->texture));
 
         if (button->mouse_over && !mover) {
