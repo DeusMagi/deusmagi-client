@@ -26,5 +26,4 @@ __pycache__
 # Client
 
 deusmagi
-config-custom.cfg
-build.user
+client-custom.cfg
