@@ -4,7 +4,6 @@
  */
 
 #include <global.h>
-#include <toolkit/gitversion.h>
 #include <region_map.h>
 #include <toolkit/packet.h>
 #include <toolkit/string.h>
@@ -697,11 +696,7 @@ int main(int argc, char *argv[])
 
     char buf[HUGE_BUF];
     snprintf(VS(buf), "Welcome to Deus Magi version %s", version);
-#ifdef GITVERSION
-    snprintfcat(VS(buf), "%s",
-                " (" STRINGIFY(GITBRANCH) "/" STRINGIFY(GITVERSION)
-                " by " STRINGIFY(GITAUTHOR) ")");
-#endif
+    
     draw_info(COLOR_HGOLD, buf);
 
     if (!x11_clipboard_register_events()) {

@@ -8,7 +8,6 @@ cmake_install.cmake
 # CMake Headers
 
 cmake.h
-gitversion.h
 version.h
 
 # General

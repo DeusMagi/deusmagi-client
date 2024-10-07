@@ -1,5 +1,6 @@
-project(deusmagi C)
 cmake_minimum_required(VERSION 3.12)
+
+project(deusmagi C)
 
 set(EXECUTABLE deusmagi)
 set(PACKAGE_NAME "Deus Magi Client")
