@@ -47,10 +47,10 @@
  */
 #define DARK_LEVELS 7
 
-#define DIRECTORY_SFX "sound/effects"
+#define DIRECTORY_SFX "sounds/effects"
 #define DIRECTORY_CACHE "cache"
-#define DIRECTORY_GFX_USER "gfx_user"
-#define DIRECTORY_MEDIA "sound/background"
+#define DIRECTORY_FACES "faces"
+#define DIRECTORY_MEDIA "sounds/background"
 
 /**
  * This is the minimum server version required to connect, represented as

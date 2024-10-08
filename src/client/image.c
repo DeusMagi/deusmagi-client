@@ -321,9 +321,9 @@ load_picture_from_pack (int num)
 static bool
 load_gfx_user_face (uint16_t num)
 {
-    /* First check for this image in gfx_user directory. */
+    /* First check for this image in the faces directory. */
     char buf[MAX_BUF];
-    snprintf(VS(buf), DIRECTORY_GFX_USER "/%s.png", image_bmaps[num].name);
+    snprintf(VS(buf), DIRECTORY_FACES "/%s.png", image_bmaps[num].name);
 
     FILE *fp = path_fopen(buf, "rb");
     if (fp == NULL) {
@@ -380,7 +380,7 @@ image_request_face (int pnum)
     char buf[MAX_BUF];
     uint16_t num = (uint16_t) (pnum &~0x8000);
 
-    if (setting_get_int(OPT_CAT_DEVEL, OPT_RELOAD_GFX) &&
+    if (setting_get_int(OPT_CAT_DEVEL, OPT_RELOAD_FACES) &&
         load_gfx_user_face(num)) {
         return;
     }

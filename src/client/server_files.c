@@ -377,7 +377,7 @@ server_files_processed (void)
 static char
 *server_file_path (server_files_struct *tmp, char *buf, size_t buf_size)
 {
-    snprintf(buf, buf_size, "srv_files/%s", tmp->name);
+    snprintf(buf, buf_size, "server/%s", tmp->name);
     return buf;
 }
 

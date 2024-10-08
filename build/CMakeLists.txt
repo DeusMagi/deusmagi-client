@@ -5,6 +5,9 @@ project(deusmagi C)
 set(EXECUTABLE deusmagi)
 set(PACKAGE_NAME "Deus Magi Client")
 
+set(CMAKE_SKIP_INSTALL_RULES true)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY AppDir)
+
 include_directories(common)
 include_directories(../src)
 include_directories(../src/include)
@@ -15,7 +18,7 @@ add_definitions(-Wall -Wextra -Wno-unused-parameter -Wno-deprecated-declarations
 set(LINUX true)
 set(PLUGIN_SUFFIX ".so")
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules)
 
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIR})
@@ -36,8 +39,8 @@ set(HAVE_SDL_TTF true)
 find_package(LibXml2 REQUIRED)
 include_directories(${LIBXML2_INCLUDE_DIR})
 
-configure_file(cmake.h.def ../src/include/cmake.h)
-configure_file(version.h.def ../src/include/version.h)
+configure_file(define/cmake.h.def ../src/include/cmake.h)
+configure_file(define/version.h.def ../src/include/version.h)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS ../src/*)
 add_executable(${EXECUTABLE} ${SOURCES} ${SOURCES_TOOLKIT})

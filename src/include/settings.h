@@ -119,8 +119,8 @@ enum {
 enum {
     /** Whether to show FPS. */
     OPT_SHOW_FPS,
-    /** Whether to always try to reload graphics from gfx_user directory. */
-    OPT_RELOAD_GFX,
+    /** Whether to always try to reload graphics from the faces directory. */
+    OPT_RELOAD_FACES,
     /** Whether to disable /region_map cache. */
     OPT_DISABLE_RM_CACHE,
     /** Whether to enable the operator interface. */

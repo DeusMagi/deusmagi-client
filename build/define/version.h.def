@@ -1,16 +1,9 @@
 #ifndef VERSION_H
 #define VERSION_H
 
-/* Name of the package. */
 #define PACKAGE_NAME "@PACKAGE_NAME@"
-
-/* Major version of the package. */
 #define PACKAGE_VERSION_MAJOR @PACKAGE_VERSION_MAJOR@
-
-/* Minor version of the package. */
 #define PACKAGE_VERSION_MINOR @PACKAGE_VERSION_MINOR@
-
-/* Patch version of the package. */
 #define PACKAGE_VERSION_PATCH @PACKAGE_VERSION_PATCH@
 
 #endif

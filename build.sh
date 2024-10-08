@@ -5,8 +5,10 @@ if [[ $1 == "clean" ]]; then
     
     rm -Rf build/CMakeCache.txt
     rm -Rf build/CMakeFiles
+    rm -Rf build/Makefile
     rm -Rf build/common/toolkit/CMakeCache.txt
     rm -Rf build/common/toolkit/CMakeFiles
+    rm -Rf build/common/toolkit/Makefile
 fi
 
 cd build
