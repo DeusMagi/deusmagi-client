@@ -11,6 +11,14 @@ if [[ $1 == "clean" ]]; then
     rm -Rf build/common/toolkit/Makefile
 fi
 
+if [[ $1 == "package" ]]; then
+    echo "Packaging ..."
+    
+    ARCH=x86_64 appimagetool build/AppDir build/DeusMagi.AppImage
+    
+    exit 0
+fi
+
 cd build
 
 cmake \
