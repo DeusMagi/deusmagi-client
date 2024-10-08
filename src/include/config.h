@@ -16,7 +16,7 @@
 /** What scripts to autoload on client startup. */
 #define SCRIPTS_AUTOLOAD "settings/scripts_autoload"
 /** Log file. */
-#define LOG_FILE "client.log"
+#define LOG_FILE "deusmagi.log"
 /** Name of the icon. */
 #define CLIENT_ICON_NAME "icon.png"
 /** File that contains the default settings. */

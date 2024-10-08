@@ -643,10 +643,10 @@ int main(int argc, char *argv[])
 
     memset(&clioption_settings, 0, sizeof(clioption_settings));
 
-    path = file_path("client.cfg", "r");
+    path = file_path("deusmagi.cfg", "r");
     clioptions_load(path, NULL);
     efree(path);
-    path = file_path("client-custom.cfg", "r");
+    path = file_path("deusmagi-custom.cfg", "r");
     clioptions_load(path, NULL);
     efree(path);
 
