@@ -605,12 +605,14 @@ int main(int argc, char *argv[])
     toolkit_import(string);
     toolkit_import(stringbuffer);
     toolkit_import(x11);
-
+    
     path_fopen = client_fopen_wrapper;
 
     char version[MAX_BUF];
     package_get_version_full(VS(version));
-
+    
+    LOG(INFO, "Starting %s v%s ...", PACKAGE_NAME, PACKAGE_VERSION);
+    
     /* Store user agent for cURL, including if this is a GNU/Linux build of
      * the client or a Windows one. */
     char user_agent[MAX_BUF];
@@ -695,7 +697,7 @@ int main(int argc, char *argv[])
     efree(path);
 
     char buf[HUGE_BUF];
-    snprintf(VS(buf), "Welcome to Deus Magi version %s", version);
+    snprintf(VS(buf), "Welcome to %s v%s", PACKAGE_NAME, PACKAGE_VERSION);
     
     draw_info(COLOR_HGOLD, buf);
 
