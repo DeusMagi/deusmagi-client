@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.12)
 project(deusmagi C)
 
 set(EXECUTABLE deusmagi)
-set(PACKAGE_NAME "Deus Magi Client")
+set(PACKAGE_NAME "Deus Magi")
 
 set(CMAKE_SKIP_INSTALL_RULES true)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY AppDir)
