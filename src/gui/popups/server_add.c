@@ -72,7 +72,7 @@ static int popup_event(popup_struct *popup, SDL_Event *event)
         return 1;
     }
 
-    if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+    if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON(1)) {
         if (text_input_mouse_over(&text_input_server_host, event->button.x, event->button.y)) {
             text_input_server_port.focus = 0;
             text_input_server_host.focus = 1;

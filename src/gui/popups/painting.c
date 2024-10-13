@@ -220,7 +220,7 @@ popup_event_func (popup_struct *popup, SDL_Event *event)
     popup_painting_t *painting_data = popup->custom_data;
 
     if (event->type == SDL_MOUSEWHEEL) {
-        if (event->button.button == SDL_BUTTON_LEFT) {
+        if (event->button.button == SDL_BUTTON(1)) {
             painting_data->mx = event->motion.x;
             painting_data->my = event->motion.y;
         } else if (event->wheel.y > 0 || event->wheel.y < 0) {
@@ -241,7 +241,7 @@ popup_event_func (popup_struct *popup, SDL_Event *event)
             popup->redraw = 1;
         }
     } else if (event->type == SDL_MOUSEBUTTONUP) {
-        if (event->button.button == SDL_BUTTON_LEFT) {
+        if (event->button.button == SDL_BUTTON(1)) {
             painting_data->mx = painting_data->my = -1;
         }
     } else if (event->type == SDL_MOUSEMOTION &&

@@ -2151,9 +2151,9 @@ map_mouse_fire (void)
     int x, y;
     Uint8 state = SDL_GetMouseState(&x, &y);
 
-    if ((state != (SDL_BUTTON(SDL_BUTTON_RIGHT) |
-                   SDL_BUTTON(SDL_BUTTON_LEFT)) &&
-         state != SDL_BUTTON(SDL_BUTTON_MIDDLE))) {
+    if ((state != (SDL_BUTTON(3) |
+                   SDL_BUTTON(1)) &&
+         state != SDL_BUTTON(2))) {
         return false;
     }
 
@@ -2354,7 +2354,7 @@ static void widget_draw(widgetdata *widget)
     }
 
     /* Holding the right mouse button for some time, create a menu. */
-    if (SDL_GetMouseState(&mx, &my) == SDL_BUTTON(SDL_BUTTON_RIGHT) &&
+    if (SDL_GetMouseState(&mx, &my) == SDL_BUTTON(3) &&
             right_click_ticks != -1 &&
             SDL_GetTicks() - right_click_ticks > 500) {
         widgetdata *menu;
@@ -2387,7 +2387,7 @@ static int widget_event(widgetdata *widget, SDL_Event *event)
     if (event->type == SDL_MOUSEBUTTONUP) {
         /* Send target command if we released the right button in time;
          * otherwise the widget menu will be created. */
-        if (event->button.button == SDL_BUTTON_RIGHT &&
+        if (event->button.button == SDL_BUTTON(3) &&
                 SDL_GetTicks() - right_click_ticks < 500) {
             send_target(rx, ry, 0);
         }
@@ -2395,9 +2395,9 @@ static int widget_event(widgetdata *widget, SDL_Event *event)
         right_click_ticks = -1;
         return 1;
     } else if (event->type == SDL_MOUSEBUTTONDOWN) {
-        if (event->button.button == SDL_BUTTON_RIGHT) {
+        if (event->button.button == SDL_BUTTON(3)) {
             right_click_ticks = SDL_GetTicks();
-        } else if (SDL_GetMouseState(NULL, NULL) == SDL_BUTTON_LEFT) {
+        } else if (SDL_GetMouseState(NULL, NULL) == SDL_BUTTON(1)) {
             /* Running */
 
             if (cpl.fire_on || cpl.run_on) {

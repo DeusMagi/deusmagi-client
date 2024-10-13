@@ -1329,9 +1329,9 @@ int widgets_event(SDL_Event *event)
             SetPriorityWidget(widget);
 
             /* Right mouse button was clicked, try to create menu. */
-            if (event->button.button == SDL_BUTTON_RIGHT && !cur_widget[MENU_ID] && widget->menu_handle_func && widget->menu_handle_func(widget, event)) {
+            if (event->button.button == SDL_BUTTON(3) && !cur_widget[MENU_ID] && widget->menu_handle_func && widget->menu_handle_func(widget, event)) {
                 return 1;
-            } else if (widget->resize_flags && event->button.button == SDL_BUTTON_LEFT) {
+            } else if (widget->resize_flags && event->button.button == SDL_BUTTON(1)) {
                 /* Start resizing. */
                 widget_event_resize.active = 1;
                 widget_event_resize.owner = widget;

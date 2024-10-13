@@ -292,7 +292,7 @@ static int widget_event(widgetdata *widget, SDL_Event *event)
     uint32_t row, col;
     if (list_mouse_get_pos(tmp->list, event->motion.x, event->motion.y,
             &row, &col)) {
-        if (event->button.button == SDL_BUTTON_LEFT) {
+        if (event->button.button == SDL_BUTTON(1)) {
             if (event->type == SDL_MOUSEBUTTONUP) {
                 if (event_dragging_check()) {
                     if (!object_find_object_inv(cpl.ob, cpl.dragging_tag)) {

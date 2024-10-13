@@ -501,8 +501,8 @@ static int widget_event(widgetdata *widget, SDL_Event *event)
 
     if ((event->type == SDL_MOUSEBUTTONDOWN ||
             event->type == SDL_MOUSEBUTTONUP) &&
-            (event->button.button == SDL_BUTTON_LEFT ||
-            event->button.button == SDL_BUTTON_RIGHT)) {
+            (event->button.button == SDL_BUTTON(1) ||
+            event->button.button == SDL_BUTTON(3))) {
         uint32_t i, r;
         object *tmp, *tmp2, *found;
 
@@ -588,7 +588,7 @@ static int widget_event(widgetdata *widget, SDL_Event *event)
 
         if (found != NULL) {
             if (event->type == SDL_MOUSEBUTTONDOWN) {
-                if (event->button.button == SDL_BUTTON_LEFT) {
+                if (event->button.button == SDL_BUTTON(1)) {
                     event_dragging_start(found->tag, event->motion.x,
                             event->motion.y);
                     event_dragging_set_callback(event_drag_cb);

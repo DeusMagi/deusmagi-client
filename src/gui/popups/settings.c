@@ -126,7 +126,7 @@ static int popup_event(popup_struct *popup, SDL_Event *event)
                 if (event->motion.x >= x && event->motion.x < x + width) {
                     if (event->type == SDL_MOUSEMOTION) {
                         button_selected = i;
-                    } else if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+                    } else if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON(1)) {
                         settings_button_handle(popup, i);
                         return 1;
                     }

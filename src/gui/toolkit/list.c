@@ -713,7 +713,7 @@ int list_handle_mouse(list_struct *list, SDL_Event *event)
         }
 
         /* Mouse click? */
-        if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+        if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON(1)) {
             /* See if we clicked on this row earlier, and whether this
              * should be considered a double click. */
             if (SDL_GetTicks() - list->click_tick < DOUBLE_CLICK_DELAY) {

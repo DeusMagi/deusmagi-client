@@ -425,7 +425,7 @@ static int popup_event(popup_struct *popup, SDL_Event *event)
                 return 1;
             }
         } else if (event->type == SDL_MOUSEBUTTONDOWN) {
-            if (event->button.button == SDL_BUTTON_LEFT) {
+            if (event->button.button == SDL_BUTTON(1)) {
                 for (i = TEXT_INPUT_PASSWORD; i < TEXT_INPUT_NUM; i++) {
                     if (text_input_mouse_over(&text_inputs[i], event->motion.x, event->motion.y)) {
                         text_inputs[text_input_current].focus = 0;

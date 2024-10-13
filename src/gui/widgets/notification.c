@@ -249,7 +249,7 @@ static void widget_draw(widgetdata *widget)
 /** @copydoc widgetdata::event_func */
 static int widget_event(widgetdata *widget, SDL_Event *event)
 {
-    if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+    if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON(1)) {
         notification_action_do();
         return 1;
     }

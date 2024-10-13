@@ -822,7 +822,7 @@ static int widget_event(widgetdata *widget, SDL_Event *event)
         WIDGET_REDRAW(widget);
     }
 
-    if (event->button.button == SDL_BUTTON_LEFT) {
+    if (event->button.button == SDL_BUTTON(1)) {
         if (event->type == SDL_MOUSEBUTTONUP) {
             return 1;
         } else if (event->type == SDL_MOUSEBUTTONDOWN) {

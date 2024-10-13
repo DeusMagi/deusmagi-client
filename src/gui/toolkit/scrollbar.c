@@ -242,7 +242,7 @@ static int scrollbar_click_scroll(scrollbar_struct *scrollbar, int test)
  */
 int scrollbar_need_redraw(scrollbar_struct *scrollbar)
 {
-    if (scrollbar_click_scroll(scrollbar, 1) && SDL_GetMouseState(NULL, NULL) == SDL_BUTTON_LEFT) {
+    if (scrollbar_click_scroll(scrollbar, 1) && SDL_GetMouseState(NULL, NULL) == SDL_BUTTON(1)) {
         return 1;
     }
 
@@ -427,12 +427,12 @@ void scrollbar_show(scrollbar_struct *scrollbar, SDL_Surface *surface, int x, in
 
     /* If the scroll direction is set but the left mouse button is no
      * longer being held, clear the scroll direction. */
-    if (scrollbar->scroll_direction != SCROLL_DIRECTION_NONE && SDL_GetMouseState(NULL, NULL) != SDL_BUTTON_LEFT) {
+    if (scrollbar->scroll_direction != SCROLL_DIRECTION_NONE && SDL_GetMouseState(NULL, NULL) != SDL_BUTTON(1)) {
         scrollbar->scroll_direction = SCROLL_DIRECTION_NONE;
     }
 
     /* Handle click repeating. */
-    if (SDL_GetMouseState(NULL, NULL) == SDL_BUTTON_LEFT && SDL_GetTicks() - scrollbar->click_ticks > scrollbar->click_repeat_ticks) {
+    if (SDL_GetMouseState(NULL, NULL) == SDL_BUTTON(1) && SDL_GetTicks() - scrollbar->click_ticks > scrollbar->click_repeat_ticks) {
         if (scrollbar_click_scroll(scrollbar, 0)) {
             scrollbar->click_ticks = SDL_GetTicks();
             scrollbar->click_repeat_ticks = 35;
@@ -507,7 +507,7 @@ int scrollbar_event(scrollbar_struct *scrollbar, SDL_Event *event)
     if (event->type == SDL_MOUSEMOTION) {
         /* If dragging but the left mouse button is no longer being held,
          * quit dragging the slider. */
-        if (scrollbar->dragging && !(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON_LEFT)) {
+        if (scrollbar->dragging && !(SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(1))) {
             scrollbar->dragging = 0;
         }
 
@@ -557,7 +557,7 @@ int scrollbar_event(scrollbar_struct *scrollbar, SDL_Event *event)
         } else if (scrollbar_element_highlight_check(scrollbar, &scrollbar->background, event->motion.x - scrollbar->px, event->motion.y - scrollbar->py)) {
             return 1;
         }
-    } else if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+    } else if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON(1)) {
         /* Start dragging the slider. */
         if (scrollbar->slider.highlight) {
             if (scrollbar->background.w > scrollbar->background.h) {

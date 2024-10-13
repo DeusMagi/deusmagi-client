@@ -125,7 +125,7 @@ int button_need_redraw(button_struct *button)
         }
 
         if (button->pressed && !button->pressed_forced &&
-                (!mover || state != SDL_BUTTON_LEFT)) {
+                (!mover || state != SDL_BUTTON(1))) {
             button->pressed = 0;
             ret = 1;
         }
@@ -236,7 +236,7 @@ int button_event(button_struct *button, SDL_Event *event)
         }
 
         /* Left mouse click, the button has been pressed. */
-        if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+        if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON(1)) {
             button->pressed = 1;
             button->pressed_ticks = SDL_GetTicks();
             button->pressed_repeat_ticks = 750;

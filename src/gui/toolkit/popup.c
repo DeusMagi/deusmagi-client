@@ -271,10 +271,10 @@ int popup_handle_event(SDL_Event *event)
             if (event->type == SDL_MOUSEMOTION) {
                 popup_head->redraw = 1;
 
-                if (event->button.button == SDL_BUTTON_LEFT) {
+                if (event->button.button == SDL_BUTTON(1)) {
                     popup_head->selection_started = 1;
                 }
-            } else if (event->button.button == SDL_BUTTON_LEFT) {
+            } else if (event->button.button == SDL_BUTTON(1)) {
                 if (event->type == SDL_MOUSEBUTTONUP) {
                     popup_head->selection_started = 0;
                 } else if (event->type == SDL_MOUSEBUTTONDOWN) {

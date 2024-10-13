@@ -579,7 +579,7 @@ static int popup_event(popup_struct *popup, SDL_Event *event)
         }
     }
 
-    if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+    if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON(1)) {
         text_input_focused = NULL;
     }
 
@@ -635,7 +635,7 @@ static int popup_event(popup_struct *popup, SDL_Event *event)
                 }
             }
 
-            if ((event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT && text_input_mouse_over(text_input, event->motion.x, event->motion.y))) {
+            if ((event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON(1) && text_input_mouse_over(text_input, event->motion.x, event->motion.y))) {
                 text_input_focused = text_input;
                 return 1;
             }

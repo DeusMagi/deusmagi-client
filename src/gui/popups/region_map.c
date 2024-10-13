@@ -263,7 +263,7 @@ static int popup_event_func(popup_struct *popup, SDL_Event *event)
 
     /* Start dragging the map. */
     if (event->type == SDL_MOUSEBUTTONDOWN &&
-            event->button.button == SDL_BUTTON_LEFT &&
+            event->button.button == SDL_BUTTON(1) &&
             RM_IN_MAP(popup, event->motion.x, event->motion.y)) {
         region_map_dragging = 1;
     }
@@ -272,7 +272,7 @@ static int popup_event_func(popup_struct *popup, SDL_Event *event)
     if (region_map_dragging) {
         /* Stop dragging the map if the left mouse button has been released. */
         if (event->type == SDL_MOUSEBUTTONUP &&
-                event->button.button == SDL_BUTTON_LEFT) {
+                event->button.button == SDL_BUTTON(1)) {
             region_map_dragging = 0;
             return 1;
         }
@@ -310,7 +310,7 @@ static int popup_event_func(popup_struct *popup, SDL_Event *event)
             }
         }
     } else if (event->type == SDL_MOUSEBUTTONDOWN) {
-        if (event->button.button == SDL_BUTTON_MIDDLE &&
+        if (event->button.button == SDL_BUTTON(2) &&
                 setting_get_int(OPT_CAT_DEVEL, OPT_OPERATOR) &&
                 RM_IN_MAP(popup, event->motion.x, event->motion.y)) {
             int xpos, ypos, map_x, map_y, map_w, map_h;

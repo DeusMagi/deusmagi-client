@@ -1714,7 +1714,7 @@ int text_show_character(font_struct **font, font_struct *orig_font, SDL_Surface 
                     static uint32_t ticks = 0;
 
                     if (info->anchor_tag) {
-                        if (state == SDL_BUTTON_LEFT && (!selection_start || !selection_end || *selection_start == -1 || *selection_end == -1) && (!ticks || SDL_GetTicks() - ticks > 125)) {
+                        if (state == SDL_BUTTON(1) && (!selection_start || !selection_end || *selection_start == -1 || *selection_end == -1) && (!ticks || SDL_GetTicks() - ticks > 125)) {
                             ticks = SDL_GetTicks();
                             text_anchor_execute(info, NULL);
                         } else {
@@ -1938,7 +1938,7 @@ int glyph_get_height(font_struct *font, char c)
             color = select_color_orig; \
             select_color_changed = 0; \
         } \
-        if (selection_start && selection_end && mstate == SDL_BUTTON_LEFT) \
+        if (selection_start && selection_end && mstate == SDL_BUTTON(1)) \
         { \
             if (my >= dest.y && my <= dest.y + FONT_HEIGHT(FONT_TRY_INFO(font, info, surface)) && mx >= old_x && mx <= old_x + glyph_get_width(FONT_TRY_INFO(font, info, surface), *cp)) \
             { \
@@ -2112,7 +2112,7 @@ void text_show(SDL_Surface *surface, font_struct *font, const char *text, int x,
                 }
             }
 
-            if (selection_start && selection_end && mstate == SDL_BUTTON_LEFT && box && my >= dest.y && my <= dest.y + FONT_HEIGHT(FONT_TRY_INFO(font, info, surface)) && mx >= dest.x && mx <= dest.x + (box->w - (dest.x - info.start_x))) {
+            if (selection_start && selection_end && mstate == SDL_BUTTON(1) && box && my >= dest.y && my <= dest.y + FONT_HEIGHT(FONT_TRY_INFO(font, info, surface)) && mx >= dest.x && mx <= dest.x + (box->w - (dest.x - info.start_x))) {
                 if (*selection_started) {
                     *selection_end = cp - text;
                 } else {
@@ -2197,7 +2197,7 @@ void text_show(SDL_Surface *surface, font_struct *font, const char *text, int x,
         }
     }
 
-    if (selection_start && selection_end && mstate == SDL_BUTTON_LEFT && box && my >= dest.y + max_height && my <= dest.y + max_height + (box->h - ((dest.y + max_height) - info.start_y))) {
+    if (selection_start && selection_end && mstate == SDL_BUTTON(1) && box && my >= dest.y + max_height && my <= dest.y + max_height + (box->h - ((dest.y + max_height) - info.start_y))) {
         if (*selection_started) {
             *selection_end = cp - text;
         } else {

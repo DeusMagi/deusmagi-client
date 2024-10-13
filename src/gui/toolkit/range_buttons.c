@@ -43,7 +43,7 @@ int range_buttons_show(int x, int y, int *val, int advance)
     surface_show(ScreenSurface, x, y, NULL, texture_off);
 
     /* Check the Y position. */
-    if (my > y && my < y + texture_off->h && state == SDL_BUTTON(SDL_BUTTON_LEFT) && (!ticks || SDL_GetTicks() - ticks > 125)) {
+    if (my > y && my < y + texture_off->h && state == SDL_BUTTON(1) && (!ticks || SDL_GetTicks() - ticks > 125)) {
         /* If the left range button was clicked, decrease the value. */
         if (mx > x && mx < x + texture_left->w) {
             surface_show(ScreenSurface, x, y, NULL, texture_left);

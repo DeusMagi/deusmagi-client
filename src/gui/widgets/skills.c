@@ -350,7 +350,7 @@ static int widget_event(widgetdata *widget, SDL_Event *event)
     uint32_t row, col;
     size_t i;
 
-    if (EVENT_IS_MOUSE(event) && event->button.button == SDL_BUTTON_LEFT && list_mouse_get_pos(list_skills, event->motion.x, event->motion.y, &row, &col)) {
+    if (EVENT_IS_MOUSE(event) && event->button.button == SDL_BUTTON(1) && list_mouse_get_pos(list_skills, event->motion.x, event->motion.y, &row, &col)) {
         size_t skill_id;
 
         skill_id = row * list_skills->cols + col;

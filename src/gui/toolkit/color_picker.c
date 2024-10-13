@@ -165,7 +165,7 @@ static int color_picker_element_show(SDL_Surface *surface, color_picker_struct *
         } else if (event->type == SDL_MOUSEMOTION) {
             return 0;
         }
-    } else if (color_picker->elements[type].dragging && SDL_GetMouseState(NULL, NULL) != SDL_BUTTON_LEFT) {
+    } else if (color_picker->elements[type].dragging && SDL_GetMouseState(NULL, NULL) != SDL_BUTTON(1)) {
         /* If the element says it's being dragged, but the mouse state says
          * otherwise, stop dragging. */
         color_picker->elements[type].dragging = 0;
@@ -298,7 +298,7 @@ void color_picker_show(SDL_Surface *surface, color_picker_struct *color_picker)
  */
 int color_picker_event(color_picker_struct *color_picker, SDL_Event *event)
 {
-    if ((event->type == SDL_MOUSEBUTTONDOWN || event->type == SDL_MOUSEMOTION) && event->button.button == SDL_BUTTON_LEFT) {
+    if ((event->type == SDL_MOUSEBUTTONDOWN || event->type == SDL_MOUSEMOTION) && event->button.button == SDL_BUTTON(1)) {
         size_t i;
 
         for (i = 0; i < COLOR_PICKER_ELEM_NUM; i++) {

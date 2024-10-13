@@ -387,7 +387,7 @@ int intro_event(SDL_Event *event)
         return 0;
     }
 
-    if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON_LEFT) {
+    if (event->type == SDL_MOUSEBUTTONDOWN && event->button.button == SDL_BUTTON(1)) {
         if (LIST_MOUSE_OVER(list_news, event->motion.x, event->motion.y)) {
             list_news->focus = 1;
             list_servers->focus = 0;
