@@ -19,6 +19,16 @@ if [[ $1 == "package" ]]; then
     exit 0
 fi
 
+if [[ $1 == "debug" ]]; then
+    echo "Debugging ..."
+    
+    cd build
+    gdb -ex "set disable-randomization off" ./DeusMagi.AppImage
+    cd ..
+    
+    exit 0
+fi
+
 cd build
 
 cmake \
