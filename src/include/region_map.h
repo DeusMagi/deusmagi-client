@@ -11,7 +11,7 @@
 #include <toolkit/curl.h>
 
 /** Default zoom level. */
-#define RM_ZOOM_DEFAULT 100
+#define RM_ZOOM_DEFAULT 150
 /** Minimum zoom level. */
 #define RM_ZOOM_MIN 50
 /** Maximum zoom level. */
