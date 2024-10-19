@@ -17,7 +17,7 @@ typedef struct keybind_struct {
     char *command;
 
     /** Key bound. */
-    SDL_Keycode key;
+    SDL_Scancode key;
 
     /** Ctrl/shift/etc modifiers. */
     SDL_Keymod mod;

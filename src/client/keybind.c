@@ -106,7 +106,7 @@ void keybind_save(void)
 
     for (size_t i = 0; i < keybindings_num; i++) {
         fprintf(fp, "bind\n");
-        fprintf(fp, "\t# %s\n\tkey %d\n", SDL_GetKeyName(keybindings[i]->key),
+        fprintf(fp, "\t# %s\n\tkey %d\n", SDL_GetScancodeName(keybindings[i]->key),
                 keybindings[i]->key);
 
         if (keybindings[i]->mod != 0) {
@@ -210,7 +210,7 @@ static SDL_Keymod keybind_adjust_kmod(SDL_Keymod mod)
  * @return
  * The added keybinding.
  */
-keybind_struct *keybind_add(SDL_Keycode key, SDL_Keymod mod, const char *command)
+keybind_struct *keybind_add(SDL_Scancode key, SDL_Keymod mod, const char *command)
 {
     keybind_struct *keybind;
 
@@ -239,7 +239,7 @@ keybind_struct *keybind_add(SDL_Keycode key, SDL_Keymod mod, const char *command
  * @param command
  * Command to change.
  */
-void keybind_edit(size_t i, SDL_Keycode key, SDL_Keymod mod, const char *command)
+void keybind_edit(size_t i, SDL_Scancode key, SDL_Keymod mod, const char *command)
 {
     /* Sanity check. */
     if (i >= keybindings_num) {
@@ -309,7 +309,7 @@ void keybind_repeat_toggle(size_t i)
  * @return
  * 'buf'.
  */
-char *keybind_get_key_shortcut(SDL_Keycode key, SDL_Keymod mod, char *buf, size_t len)
+char *keybind_get_key_shortcut(SDL_Scancode key, SDL_Keymod mod, char *buf, size_t len)
 {
     buf[0] = '\0';
 
@@ -330,8 +330,8 @@ char *keybind_get_key_shortcut(SDL_Keycode key, SDL_Keymod mod, char *buf, size_
         strncat(buf, "super + ", len - strlen(buf) - 1);
     }
 
-    if (key != SDLK_UNKNOWN) {
-        strncat(buf, SDL_GetKeyName(key), len - strlen(buf) - 1);
+    if (key != SDL_SCANCODE_UNKNOWN) {
+        strncat(buf, SDL_GetScancodeName(key), len - strlen(buf) - 1);
     }
 
     return buf;
@@ -372,7 +372,7 @@ int keybind_command_matches_event(const char *cmd, SDL_KeyboardEvent *event)
         return 0;
     }
 
-    if (event->keysym.sym == keybind->key && (!keybind->mod || keybind->mod == keybind_adjust_kmod(event->keysym.mod))) {
+    if (event->keysym.scancode == keybind->key && (!keybind->mod || keybind->mod == keybind_adjust_kmod(event->keysym.mod))) {
         return 1;
     }
 
@@ -415,7 +415,7 @@ int keybind_process_event(SDL_KeyboardEvent *event)
 
     /* Try to handle keybindings with modifier keys first. */
     for (i = 0; i < keybindings_num; i++) {
-        if (event->keysym.sym == keybindings[i]->key && keybindings[i]->mod == keybind_adjust_kmod(event->keysym.mod)) {
+        if (event->keysym.scancode == keybindings[i]->key && keybindings[i]->mod == keybind_adjust_kmod(event->keysym.mod)) {
             keybind_process(keybindings[i], event->type);
             return 1;
         }
@@ -424,7 +424,7 @@ int keybind_process_event(SDL_KeyboardEvent *event)
     /* Now handle keys with no modifier keys, regardless of what the
      * current keyboard modifier combination is. */
     for (i = 0; i < keybindings_num; i++) {
-        if (event->keysym.sym == keybindings[i]->key && !keybindings[i]->mod) {
+        if (event->keysym.scancode == keybindings[i]->key && !keybindings[i]->mod) {
             keybind_process(keybindings[i], event->type);
             return 1;
         }
