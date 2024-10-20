@@ -1,54 +1,30 @@
 bind
-	# [9]
-	key 38
+	# up
+	key 82
 	repeat 1
 	command ?MOVE_N
 end
 bind
-	# [6]
-	key 35
-	repeat 1
-	command ?MOVE_NE
-end
-bind
-	# [3]
-	key 32
+	# right
+	key 79
 	repeat 1
 	command ?MOVE_E
 end
 bind
-	# [2]
-	key 31
-	repeat 1
-	command ?MOVE_SE
-end
-bind
-	# [1]
-	key 30
+	# down
+	key 81
 	repeat 1
 	command ?MOVE_S
 end
 bind
-	# [4]
-	key 33
-	repeat 1
-	command ?MOVE_SW
-end
-bind
-	# [7]
-	key 36
+	# left
+	key 80
 	repeat 1
 	command ?MOVE_W
 end
 bind
-	# [8]
-	key 37
-	repeat 1
-	command ?MOVE_NW
-end
-bind
-	# [5]
-	key 34
+	# slash
+	key 56
 	repeat 1
 	command ?MOVE_STAY
 end
@@ -140,24 +116,28 @@ end
 bind
 	# up
 	key 82
+	mod 3
 	repeat 1
 	command ?UP
 end
 bind
 	# down
 	key 81
+	mod 3
 	repeat 1
 	command ?DOWN
 end
 bind
 	# left
 	key 80
+	mod 3
 	repeat 1
 	command ?LEFT
 end
 bind
 	# right
 	key 79
+	mod 3
 	repeat 1
 	command ?RIGHT
 end
@@ -304,13 +284,13 @@ end
 bind
 	# c
 	key 6
-	mod 192
+	mod 120
 	command ?COPY
 end
 bind
 	# v
 	key 25
-	mod 192
+	mod 120
 	command ?PASTE
 end
 bind
