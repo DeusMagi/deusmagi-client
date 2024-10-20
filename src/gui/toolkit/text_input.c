@@ -384,7 +384,25 @@ int text_input_event(text_input_struct *text_input, SDL_Event *event)
 
             if (isprint(c) && (!text_input->character_check_func || text_input->character_check_func(text_input, c))) {
                 if (event->key.keysym.mod & KMOD_SHIFT) {
-                    c = toupper(c);
+                    int c_digit = isdigit(c);
+                    
+                    if (c_digit > 0) {
+                        switch (c) {
+                            case '1': c = '!'; break;
+                            case '2': c = '@'; break;
+                            case '3': c = '#'; break;
+                            case '4': c = '$'; break;
+                            case '5': c = '%'; break;
+                            case '6': c = '^'; break;
+                            case '7': c = '&'; break;
+                            case '8': c = '*'; break;
+                            case '9': c = '('; break;
+                            case '0': c = ')'; break;
+                            default: break;
+                        }
+                    } else {
+                        c = toupper(c);
+                    }
                 }
 
                 text_input_add_char(text_input, c);
