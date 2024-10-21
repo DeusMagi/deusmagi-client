@@ -14,12 +14,18 @@ static int dragging_old_mx = -1, dragging_old_my = -1;
 int event_dragging_check(void)
 {
     int mx, my;
+    float lx, ly;
 
     if (!cpl.dragging_tag) {
         return 0;
     }
 
     SDL_GetMouseState(&mx, &my);
+    
+    // map the mouse coordinates to our logical render size
+    SDL_RenderWindowToLogical(ScreenRenderer, mx, my, &lx, &ly);
+    mx = (int) lx;
+    my = (int) ly;
 
     if (abs(cpl.dragging_startx - mx) < 3 && abs(cpl.dragging_starty - my) < 3) {
         return 0;
@@ -31,12 +37,18 @@ int event_dragging_check(void)
 int event_dragging_need_redraw(void)
 {
     int mx, my;
+    float lx, ly;
 
     if (!event_dragging_check()) {
         return 0;
     }
 
     SDL_GetMouseState(&mx, &my);
+    
+    // map the mouse coordinates to our logical render size
+    SDL_RenderWindowToLogical(ScreenRenderer, mx, my, &lx, &ly);
+    mx = (int) lx;
+    my = (int) ly;
 
     if (mx != dragging_old_mx || my != dragging_old_my) {
         dragging_old_mx = mx;
@@ -50,6 +62,13 @@ int event_dragging_need_redraw(void)
 
 void event_dragging_start(tag_t tag, int mx, int my)
 {
+    float lx, ly;
+    
+    // map the mouse coordinates to our logical render size
+    SDL_RenderWindowToLogical(ScreenRenderer, mx, my, &lx, &ly);
+    mx = (int) lx;
+    my = (int) ly;
+    
     dragging_old_mx = -1;
     dragging_old_my = -1;
 

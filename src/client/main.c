@@ -817,7 +817,14 @@ int main(int argc, char *argv[])
         /* Show the currently dragged item. */
         if (event_dragging_check()) {
             int mx, my;
+            float lx, ly;
+            
             SDL_GetMouseState(&mx, &my);
+            
+            // map the mouse coordinates to our logical render size
+            SDL_RenderWindowToLogical(ScreenRenderer, mx, my, &lx, &ly);
+            mx = (int) lx;
+            my = (int) ly;
             
             object_show_centered(ScreenSurface, object_find(cpl.dragging_tag),
                     mx, my, INVENTORY_ICON_SIZE, INVENTORY_ICON_SIZE, false);
