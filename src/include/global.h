@@ -15,6 +15,7 @@
 #include <SDL_main.h>
 #include <SDL_syswm.h>
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <zlib.h>
 #include <pthread.h>
@@ -24,11 +25,6 @@
 #include <toolkit/shstr.h>
 #include <toolkit/memory.h>
 #include <toolkit/mempool.h>
-
-#ifdef HAVE_SDL_MIXER
-#include <SDL_mixer.h>
-#endif
-
 #include <version.h>
 #include <scrollbar.h>
 #include <item.h>

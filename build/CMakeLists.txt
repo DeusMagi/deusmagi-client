@@ -30,7 +30,6 @@ set(HAVE_SDL_IMAGE true)
 
 find_package(SDL2_mixer REQUIRED)
 include_directories(${SDL2_MIXER_INCLUDE_DIR})
-set(HAVE_SDL_MIXER true)
 
 find_package(SDL2_ttf REQUIRED)
 include_directories(${SDL2_TTF_INCLUDE_DIR})

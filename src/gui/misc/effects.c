@@ -296,9 +296,7 @@ void effect_sprites_free(effect_struct *effect)
     effect->sprites = effect->sprites_end = NULL;
 
     if (effect->sound_channel != -1) {
-#ifdef HAVE_SDL_MIXER
         Mix_HaltChannel(effect->sound_channel);
-#endif
         effect->sound_channel = -1;
     }
 }

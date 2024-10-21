@@ -4,7 +4,6 @@
 #cmakedefine HAVE_SDL
 #cmakedefine HAVE_SDL_IMAGE
 #cmakedefine HAVE_SDL_TTF
-#cmakedefine HAVE_SDL_MIXER
 
 #define INSTALL_SUBDIR_SHARE "@INSTALL_SUBDIR_SHARE@"
 #define EXECUTABLE "@EXECUTABLE@"
