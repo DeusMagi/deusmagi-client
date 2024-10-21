@@ -60,7 +60,7 @@ static int texture_data_new(texture_struct *tmp)
                 surface = SDL_CreateRGBSurface(0, w, h, video_get_bpp(), 0, 0, 0, 0);
 
                 if (alpha != 255) {
-                    SDL_SetSurfaceAlphaMod(surface, alpha);
+                    SDL_SetSurfaceAlphaMod(surface, 0);
                 }
 
                 cp = strchr(tmp->name + 10, ';');
