@@ -25,6 +25,8 @@ Client Requirements
 -------------------
 
 - Any Linux x64 distribution that supports [AppImage](https://appimage.org)
+  - `chmod a+x DeusMagi.AppImage`
+  - Run `DeusMagi.AppImage`
 
 - Windows 10+ with [WSL v2 Ubuntu](https://learn.microsoft.com/en-us/windows/wsl/install) installed
   - Install the Windows Subsystem for Linux v2
