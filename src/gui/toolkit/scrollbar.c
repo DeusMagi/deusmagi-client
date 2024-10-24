@@ -170,12 +170,18 @@ static void scrollbar_element_render(scrollbar_struct *scrollbar, scrollbar_elem
     /* Make sure the element should still be highlighted. */
     if (elem->highlight) {
         int mx, my;
+        float lx, ly;
 
         SDL_GetMouseState(&mx, &my);
 
         mx -= scrollbar->px;
         my -= scrollbar->py;
-
+        
+        // map the mouse coordinates to our logical render size
+        SDL_RenderWindowToLogical(ScreenRenderer, mx, my, &lx, &ly);
+        mx = (int) lx;
+        my = (int) ly;
+        
         scrollbar_element_highlight_check(scrollbar, elem, mx, my);
     }
 
