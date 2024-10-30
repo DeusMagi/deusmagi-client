@@ -1,4 +1,7 @@
 #!/bin/bash
 
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$APPDIR/lib
+export LIBGL_DRIVERS_PATH=$LIBGL_DRIVERS_PATH:$APPDIR/lib/dri
+
 cd $APPDIR
 exec ./deusmagi

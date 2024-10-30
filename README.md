@@ -31,8 +31,9 @@ Client Requirements
 - Windows 10+ with [WSL v2 Ubuntu](https://learn.microsoft.com/en-us/windows/wsl/install) installed
   - Install the Windows Subsystem for Linux v2
     - Open a Command Prompt and type `wsl --install`
-    - It should install v2 with Ubuntu by default
-    - Setup a user account and password
+    - It should install WSL v2 with Ubuntu by default
+    - Restart your computer and let Ubuntu finish installing
+    - Setup a user account / password and close the window
   - Run `DeusMagi.bat`
 
 Issues / Features

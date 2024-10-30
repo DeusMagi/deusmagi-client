@@ -14,6 +14,7 @@ version.h
 *.o
 *.a
 *.so
+*.so.*
 *.db
 *.log
 *.exe
@@ -26,4 +27,4 @@ __pycache__
 deusmagi
 deusmagi-custom.cfg
 DeusMagi.AppImage
-.DirIcon
+build/releases
