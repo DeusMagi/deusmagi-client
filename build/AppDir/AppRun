@@ -1,7 +1,17 @@
 #!/bin/bash
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$APPDIR/lib
-export LIBGL_DRIVERS_PATH=$LIBGL_DRIVERS_PATH:$APPDIR/lib/dri
-
 cd $APPDIR
-exec ./deusmagi
+
+if [[ $1 == "debug" ]]; then
+    gdb -ex "set disable-randomization off" \
+        -ex "set debuginfod enabled on" \
+        -ex "run" --args env \
+        LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$APPDIR/lib \
+        LIBGL_DRIVERS_PATH=$LIBGL_DRIVERS_PATH:$APPDIR/lib/dri \
+        ./deusmagi
+else
+    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$APPDIR/lib
+    export LIBGL_DRIVERS_PATH=$LIBGL_DRIVERS_PATH:$APPDIR/lib/dri
+    
+    exec ./deusmagi
+fi
