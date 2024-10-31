@@ -42,7 +42,7 @@ if [[ $1 == "package" ]]; then
     
     # remove unnecessary files
     rm -f build/AppDir/deusmagi.log
-    rm -f build/AppDir/server/hfiles
+    ls -Q build/AppDir/server | grep -v .gitignore | xargs rm -f
     rm -f build/AppDir/lib/ld-linux-x86-64.so.2
     rm -f build/AppDir/lib/libc.so.6
     

@@ -27,5 +27,4 @@ __pycache__
 deusmagi
 deusmagi-custom.cfg
 DeusMagi.AppImage
-build/AppDir/server/*
 build/releases
