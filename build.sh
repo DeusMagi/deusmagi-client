@@ -14,37 +14,8 @@ fi
 if [[ $1 == "package" ]]; then
     echo "Packaging ..."
     
-    rm -Rf build/AppDir/lib
-    
-    mkdir -p build/AppDir/lib
-    mkdir -p build/AppDir/lib/dri
-    
-    # copy the graphic drivers
-    cp /usr/lib/x86_64-linux-gnu/dri/* build/AppDir/lib/dri
-    
-    # copy the dependencies
-    ldd build/AppDir/deusmagi \
-        | grep so \
-        | sed -e '/^[^\t]/ d' \
-        | sed -e 's/\t//' \
-        | sed -e 's/.*=..//' \
-        | sed -e 's/ (0.*)//' \
-        | while read -r depend; do \
-            cp $depend build/AppDir/lib/ 2>/dev/null; \
-          done
-    
-    # copy the libraries used by MESA
-    cp /usr/lib/x86_64-linux-gnu/libLLVM-15.so.1 build/AppDir/lib/
-    cp /usr/lib/x86_64-linux-gnu/libGL.so.1 build/AppDir/lib/
-    cp /usr/lib/x86_64-linux-gnu/libGLU.so.1 build/AppDir/lib/
-    cp /usr/lib/x86_64-linux-gnu/libGLX.so.0 build/AppDir/lib/
-    cp /usr/lib/x86_64-linux-gnu/libGLX_mesa.so.0 build/AppDir/lib/
-    
-    # remove unnecessary files
     rm -f build/AppDir/deusmagi.log
     ls -Q build/AppDir/server | grep -v .gitignore | xargs rm -f
-    rm -f build/AppDir/lib/ld-linux-x86-64.so.2
-    rm -f build/AppDir/lib/libc.so.6
     
     ARCH=x86_64 appimagetool -n build/AppDir build/DeusMagi.AppImage
     

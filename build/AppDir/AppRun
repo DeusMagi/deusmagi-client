@@ -2,16 +2,29 @@
 
 cd $APPDIR
 
+if [[ $1 == "install" ]]; then
+    sudo apt-get update
+    sudo apt-get -y install \
+        libsdl2-dev \
+        libsdl2-image-dev \
+        libsdl2-mixer-dev \
+        libsdl2-ttf-dev \
+        libxml2-dev \
+        libxmu-dev \
+        mesa-utils \
+        timidity
+fi
+
 if [[ $1 == "debug" ]]; then
     gdb -ex "set disable-randomization off" \
         -ex "set debuginfod enabled on" \
-        -ex "run" --args env \
-        LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$APPDIR/lib \
-        LIBGL_DRIVERS_PATH=$LIBGL_DRIVERS_PATH:$APPDIR/lib/dri \
-        ./deusmagi
+        -ex "run" \
+        --args ./deusmagi "$@"
 else
-    export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$APPDIR/lib
-    export LIBGL_DRIVERS_PATH=$LIBGL_DRIVERS_PATH:$APPDIR/lib/dri
+    # does the device use a software renderer
+    if glxinfo -B | grep -q 'Device: llvmpipe'; then
+        export LIBGL_ALWAYS_SOFTWARE=1
+    fi
     
-    exec ./deusmagi
+    exec ./deusmagi "$@"
 fi
