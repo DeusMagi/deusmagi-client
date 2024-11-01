@@ -79,7 +79,7 @@ category Client
 	end
 	setting Fullscreen
 		type bool
-		default off
+		default on
 		desc Whether to use fullscreen mode or not.
 	end
 	setting Smooth zoom
@@ -169,7 +169,7 @@ category Map
 		type range
 		range 50 - 400
 		advance 5
-		default 100
+		default 200
 		desc Zoom percentage of the map.
 	end
 	setting Low health warning
