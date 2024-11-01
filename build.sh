@@ -26,7 +26,7 @@ if [[ $1 == "debug" ]]; then
     echo "Debugging ..."
     
     cd build
-    gdb -ex "set disable-randomization off" ./DeusMagi.AppImage
+    ./DeusMagi.AppImage debug
     cd ..
     
     exit 0

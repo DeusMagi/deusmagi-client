@@ -22,9 +22,9 @@ if [[ $1 == "debug" ]]; then
         --args ./deusmagi "$@"
 else
     # does the device use a software renderer
-    if glxinfo -B | grep -q 'Device: llvmpipe'; then
+    # if glxinfo -B | grep -q 'Device: llvmpipe'; then
         export LIBGL_ALWAYS_SOFTWARE=1
-    fi
+    # fi
     
     exec ./deusmagi "$@"
 fi

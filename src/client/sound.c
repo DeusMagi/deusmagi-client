@@ -223,10 +223,13 @@ void sound_init(void)
     enabled = 1;
 
     if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, AUDIO_S16, MIX_DEFAULT_CHANNELS, 1024) < 0) {
-        draw_info_format(COLOR_RED, "Could not initialize audio device; sound will not be heard. Reason: %s", Mix_GetError());
+        LOG(BUG, "Could not initialize audio device; sound will not be heard. Reason: %s", Mix_GetError());
+        // draw_info_format(COLOR_RED, "Could not initialize audio device; sound will not be heard. Reason: %s", Mix_GetError());
         enabled = 0;
     }
-
+    
+    LOG(DEVEL, "Sound Initialized = %d", enabled);
+    
     Mix_HookMusicFinished(sound_music_finished);
 }
 
