@@ -26,5 +26,5 @@ else
         export LIBGL_ALWAYS_SOFTWARE=1
     # fi
     
-    exec ./deusmagi "$@"
+    sh -c ./deusmagi "$@"
 fi
