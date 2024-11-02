@@ -25,15 +25,52 @@ Client Requirements
 -------------------
 
 - Any Linux x64 distribution that supports [AppImage](https://appimage.org)
-  - `chmod a+x DeusMagi.AppImage`
-  - Run `DeusMagi.AppImage`
+  - Install the dependencies (e.g. Ubuntu) ...
+
+    ```
+    sudo apt-get update
+    sudo apt-get -y install \
+        libsdl2-dev \
+        libsdl2-image-dev \
+        libsdl2-mixer-dev \
+        libsdl2-ttf-dev \
+        libxml2-dev \
+        libxmu-dev \
+        mesa-utils \
+        timidity
+    ```
+    
+  - Make the AppImage executable ...
+  
+    ```
+    chmod a+x DeusMagi.AppImage
+    ```
+  
+  - Run `./DeusMagi.AppImage`
 
 - Windows 10+ with [WSL v2 Ubuntu](https://learn.microsoft.com/en-us/windows/wsl/install) installed
   - Install the Windows Subsystem for Linux v2
     - Open a Command Prompt and type `wsl --install`
     - It should install WSL v2 with Ubuntu by default
     - Restart your computer and let Ubuntu finish installing
-    - Setup a user account / password and close the window
+    - Setup a user account / password
+    - Install the dependencies ...
+
+      ```
+      sudo apt-get update
+      sudo apt-get -y install \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libsdl2-mixer-dev \
+          libsdl2-ttf-dev \
+          libxml2-dev \
+          libxmu-dev \
+          mesa-utils \
+          timidity
+      ```
+
+    - Close the Command Prompt
+    
   - Run `DeusMagi.bat`
 
 Issues / Features
