@@ -9,4 +9,6 @@ IF %ERRORLEVEL% NEQ 0 (
     ECHO wsl --install
     ECHO:
     ECHO Please see the Client Requirements in the README for a list of the dependencies.
+    
+    PAUSE>NUL
 )
