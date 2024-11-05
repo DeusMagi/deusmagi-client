@@ -52,9 +52,11 @@ Client Requirements
   - Install the Windows Subsystem for Linux v2
     - Open a Command Prompt and type `wsl --install`
     - It should install WSL v2 with Ubuntu by default
-    - Restart your computer and let Ubuntu finish installing
-    - Setup a user account / password
-    - Install the dependencies ...
+    - Restart your computer and let WSL finish installing
+      - It can take 5 minutes or more for Windows to continue the installation after the restart
+      - In some cases, you may need to run `wsl --install` a second time
+    - Setup a user account / password in WSL
+    - Install the dependencies in WSL ...
 
       ```
       sudo apt-get update
