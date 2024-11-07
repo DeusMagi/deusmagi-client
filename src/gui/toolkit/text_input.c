@@ -388,16 +388,26 @@ int text_input_event(text_input_struct *text_input, SDL_Event *event)
                     
                     if (c_digit > 0) {
                         switch (c) {
-                            case '1': c = '!'; break;
-                            case '2': c = '@'; break;
-                            case '3': c = '#'; break;
-                            case '4': c = '$'; break;
-                            case '5': c = '%'; break;
-                            case '6': c = '^'; break;
-                            case '7': c = '&'; break;
-                            case '8': c = '*'; break;
-                            case '9': c = '('; break;
-                            case '0': c = ')'; break;
+                            case  '1': c = '!'; break;
+                            case  '2': c = '@'; break;
+                            case  '3': c = '#'; break;
+                            case  '4': c = '$'; break;
+                            case  '5': c = '%'; break;
+                            case  '6': c = '^'; break;
+                            case  '7': c = '&'; break;
+                            case  '8': c = '*'; break;
+                            case  '9': c = '('; break;
+                            case  '0': c = ')'; break;
+                            case  '-': c = '_'; break;
+                            case  '=': c = '+'; break;
+                            case  '[': c = '{'; break;
+                            case  ']': c = '}'; break;
+                            case '\\': c = '|'; break;
+                            case  ';': c = ':'; break;
+                            case '\'': c = '"'; break;
+                            case  ',': c = '<'; break;
+                            case  '.': c = '>'; break;
+                            case  '/': c = '?'; break;
                             default: break;
                         }
                     } else {
