@@ -413,7 +413,8 @@ static int setting_apply_always(int cat, int setting)
             return 1;
 
         case OPT_SYSTEM_CURSOR:
-            SDL_ShowCursor(setting_get_int(cat, setting));
+            // SDL_ShowCursor(setting_get_int(cat, setting));
+            SDL_ShowCursor(SDL_ENABLE);
             return 1;
         }
 

@@ -140,7 +140,7 @@ category Client
 	end
 	setting Use system cursor
 		type bool
-		default off
+		default on
 		desc Use the system cursor instead of the custom in-game one. May improve performance.
 	end
 	setting Resolution X
